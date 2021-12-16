@@ -11,16 +11,6 @@ type TodoListPropsType = {
 
 const TodoList = (props: TodoListPropsType) => {
 
-    /*const getTaskListItem = (task: TaskType)=> {
-        return(
-            <li>
-                <input type="checkbox" checked={task.isDone}/>
-                <span>{task.title}</span>
-            </li>
-        )
-    }
-    const tasksElements = props.tasks.map(getTaskListItem)*/
-
     const tasksList = props.tasks.map((t: TaskType) => {
         return (
             <li key={t.id}>
