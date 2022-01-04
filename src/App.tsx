@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import TodoList from "./TodoList";
+import {TodoList} from "./TodoList";
 import {v1} from "uuid";
 
 export type TaskType = {
@@ -12,7 +12,7 @@ export type TaskType = {
 export type FilterValuesType = "all" | "active" | "completed"
 
 //C-R-UD
-function App() {
+export function App() {
     //BLL:
     const [filter, setFilter] = useState<FilterValuesType>("all")
     const [tasks, setTasks] = useState<Array<TaskType>>([
@@ -73,6 +73,4 @@ function App() {
         </div>
     );
 }
-
-export default App;
 

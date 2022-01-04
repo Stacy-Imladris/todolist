@@ -11,7 +11,7 @@ type TodoListPropsType = {
     changeTaskStatus: (id: string, isDone: boolean) => void
 }
 
-const TodoList = (props: TodoListPropsType) => {
+export const TodoList = (props: TodoListPropsType) => {
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
     const tasksList = props.tasks.map((t: TaskType) => {
@@ -86,5 +86,3 @@ const TodoList = (props: TodoListPropsType) => {
         </div>
     )
 }
-
-export default TodoList;
