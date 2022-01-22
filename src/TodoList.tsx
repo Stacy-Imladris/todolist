@@ -2,7 +2,7 @@ import React from "react";
 import {FilterValuesType, TaskType} from "./App";
 import {SuperInput} from "./SuperInput";
 import {SuperSpan} from "./SuperSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, Checkbox, FormControlLabel, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 type TodolistPropsType = {
