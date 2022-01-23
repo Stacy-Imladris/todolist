@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {v1} from "uuid";
 import {Todolist} from "./Todolist";
@@ -6,18 +6,18 @@ import {SuperInput} from "./SuperInput";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {
-    AddTaskAC,
-    AddTodolistTaskAC,
-    ChangeTaskStatusAC,
-    ChangeTaskTitleAC,
-    RemoveTaskAC, RemoveTodolistTaskAC,
+    addTaskAC,
+    addTodolistTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
     tasksReducer
 } from "./state/tasks-reducer";
 import {
-    AddTodolistAC,
-    ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    RemoveTodolistAC,
+    addTodolistAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
     todolistsReducer
 } from "./state/todolists-reducer";
 
@@ -57,32 +57,31 @@ export function App() {
     });
 
     const removeTodolist = (Tid: string) => {
-        todolistsDispatch(RemoveTodolistAC(Tid))
-        tasksDispatch(RemoveTodolistTaskAC(Tid))
+        todolistsDispatch(removeTodolistAC(Tid))
+        tasksDispatch(removeTodolistAC(Tid))
     }
     const addTodolist = (title: string) => {
-        debugger
         let newId = v1()
-        todolistsDispatch(AddTodolistAC(newId, title))
-        tasksDispatch(AddTodolistTaskAC(newId))
+        todolistsDispatch(addTodolistAC(newId, title))
+        tasksDispatch(addTodolistTaskAC(newId))
     }
     const changeTodolistTitle = (Tid: string, title: string) => {
-        todolistsDispatch(ChangeTodolistTitleAC(Tid, title))
+        todolistsDispatch(changeTodolistTitleAC(Tid, title))
     }
     const changeFilter = (Tid: string, filter: FilterValuesType) => {
-        todolistsDispatch(ChangeTodolistFilterAC(Tid, filter))
+        todolistsDispatch(changeTodolistFilterAC(Tid, filter))
     }
     const removeTask = (Tid: string, taskId: string) => {
-        tasksDispatch(RemoveTaskAC(Tid, taskId))
+        tasksDispatch(removeTaskAC(Tid, taskId))
     }
     const addTask = (Tid: string, title: string) => {
-        tasksDispatch(AddTaskAC(Tid, title))
+        tasksDispatch(addTaskAC(Tid, title))
     }
     const changeTaskTitle = (Tid: string, taskId: string, title: string) => {
-        tasksDispatch(ChangeTaskTitleAC(Tid, taskId, title))
+        tasksDispatch(changeTaskTitleAC(Tid, taskId, title))
     }
     const checkboxHandler = (Tid: string, taskId: string, isDone: boolean) => {
-        tasksDispatch(ChangeTaskStatusAC(Tid, taskId, isDone))
+        tasksDispatch(changeTaskStatusAC(Tid, taskId, isDone))
     }
 
     return (
