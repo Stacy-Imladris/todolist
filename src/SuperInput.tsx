@@ -39,9 +39,12 @@ export const SuperInput = (props: SuperInputPropsType) => {
 
     return (
         <div>
-            {error === 'Title is incorrect'
-            ? <TextField error id="outlined-error" label="Title is incorrect" defaultValue='Title is incorrect' value={title} onChange={onChangeHandler}/>
-            : <TextField id="outlined-basic" label={error} variant="outlined" onChange={onChangeHandler} onKeyPress={onKeyHandler} value={title}/>}
+            <TextField error={error === 'Title is incorrect'}
+                       id="outlined-basic"
+                       label={error} variant="outlined"
+                       onChange={onChangeHandler}
+                       onKeyPress={onKeyHandler}
+                       value={title}/>
             <Fab color="primary" onClick={addHandler} size='large' style={ {marginLeft: '10px'} }>
                 <AddIcon />
             </Fab>
