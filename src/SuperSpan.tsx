@@ -4,7 +4,8 @@ type SuperSpanPropsType = {
     title: string
     changeTitle: (title: string) => void
 }
-export const SuperSpan = (props: SuperSpanPropsType) => {
+export const SuperSpan = React.memo((props: SuperSpanPropsType) => {
+    console.log('SuperSpan')
     const [title, setTitle] = useState<string>(props.title)
     const [input, setInput] = useState<boolean>(false)
 
@@ -22,4 +23,4 @@ export const SuperSpan = (props: SuperSpanPropsType) => {
     return input
         ? <input autoFocus value={title} onBlur={inputOff} onChange={onChangeHandler}/>
         : <span onDoubleClick={inputOn}>{props.title}</span>
-}
+})

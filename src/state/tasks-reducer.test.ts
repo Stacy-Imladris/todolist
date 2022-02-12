@@ -2,19 +2,19 @@ import {v1} from "uuid";
 import {TasksStateType} from "../App";
 import {
     addTaskAC,
-    addTodolistTaskAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
     tasksReducer
 } from "./tasks-reducer";
-import {removeTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 
 let todolistId1: string
 let todolistId2: string
 let startState: TasksStateType
 let taskId: string
 let newTaskTitle: string
+let newTodolistTitle: string
 let newId: string
 let isDone: boolean
 
@@ -24,6 +24,7 @@ beforeEach(() => {
     taskId = v1()
     newId = v1()
     newTaskTitle = 'Skyrim'
+    newTodolistTitle = 'New Title'
     isDone = false
     startState = {
         [todolistId1]: [
@@ -54,9 +55,9 @@ test('correct task should be added', () => {
 
     expect(endState[todolistId1].length).toBe(3)
     expect(endState[todolistId2].length).toBe(4)
-    expect(endState[todolistId2][3].id).toBeDefined()
-    expect(endState[todolistId2][3].title).toBe(newTaskTitle)
-    expect(endState[todolistId2][3].isDone).toBe(false)
+    expect(endState[todolistId2][0].id).toBeDefined()
+    expect(endState[todolistId2][0].title).toBe(newTaskTitle)
+    expect(endState[todolistId2][0].isDone).toBe(false)
 })
 
 test('correct task should change its name', () => {
@@ -82,9 +83,11 @@ test('correct todolist task should be removed', () => {
 })
 
 test('correct todolist task should be added', () => {
-    const endState = tasksReducer(startState, addTodolistTaskAC(newId))
+    const action = addTodolistAC(newTodolistTitle)
+
+    const endState = tasksReducer(startState, action)
 
     expect(Object.keys(endState).length).toBe(3)
-    expect(Object.keys(endState)[2]).toBe(newId)
-    expect(endState[newId]).toStrictEqual([])
+    expect(Object.keys(endState)[2]).toBe(action.payload.newId)
+    expect(endState[action.payload.newId]).toStrictEqual([])
 })

@@ -12,12 +12,10 @@ let todolistId1: string
 let todolistId2: string
 let newTodolistTitle: string
 let startState: Array<TodolistType>
-let newId: string
 
 beforeEach(() => {
     todolistId1 = v1()
     todolistId2 = v1()
-    newId = v1()
     newTodolistTitle = 'New Title'
     startState = [
         {id: todolistId1, title: "What to learn", filter: "all"},
@@ -33,12 +31,12 @@ test('correct todolist should be removed', () => {
 })
 
 test('correct todolist should be added', () => {
-    const endState = todolistsReducer(startState, addTodolistAC(newId, newTodolistTitle))
+    const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle))
 
     expect(endState.length).toBe(3)
-    expect(endState[2].title).toBe(newTodolistTitle)
-    expect(endState[2].filter).toBe('all')
-    expect(endState[2].id).toBe(newId)
+    expect(endState[0].title).toBe(newTodolistTitle)
+    expect(endState[0].filter).toBe('all')
+    expect(endState[0].id).toBeDefined()
 })
 
 test('correct todolist should change its name', () => {

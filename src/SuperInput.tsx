@@ -6,7 +6,8 @@ type SuperInputPropsType = {
     addHandler: (title: string) => void
 }
 
-export const SuperInput = (props: SuperInputPropsType) => {
+export const SuperInput = React.memo((props: SuperInputPropsType) => {
+    console.log('SuperInput')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('Enter title')
 
@@ -50,4 +51,4 @@ export const SuperInput = (props: SuperInputPropsType) => {
             </Fab>
         </div>
     );
-};
+})

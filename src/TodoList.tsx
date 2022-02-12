@@ -1,76 +1,66 @@
-import React from "react";
-import {FilterValuesType, TaskType} from "./App";
+import React, {useCallback} from "react";
+import {FilterValuesType, TaskType, TodolistType} from "./App";
 import {SuperInput} from "./SuperInput";
 import {SuperSpan} from "./SuperSpan";
-import {Button, Checkbox, FormControlLabel, IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "./state/store";
+import {Task} from "./Task";
+import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
 
 type TodolistPropsType = {
-    tasks: TaskType[]
     id: string
-    title: string
-    filter: FilterValuesType
-    removeTodolist: (Tid: string) => void
-    changeFilter: (Tid: string, filter: FilterValuesType) => void
-    removeTask: (Tid: string, taskId: string) => void
-    checkboxHandler: (Tid: string, taskId: string, isDone: boolean) => void
-    addTask: (Tid: string, title: string) => void
-    changeTaskTitle: (Tid: string, taskId: string, title: string) => void
-    changeTodolistTitle: (Tid: string, title: string) => void
 }
-export const Todolist = (props: TodolistPropsType) => {
+export const Todolist = React.memo((props: TodolistPropsType) => {
+    console.log('Todolist')
+    const dispatch = useDispatch()
+    const todolist = useSelector<AppRootState, TodolistType>(state => state.todolists.filter(tl => tl.id === props.id)[0])
+    const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[props.id])
 
-    const removeTodolist = () => {
-        props.removeTodolist(props.id)
+    const removeTodolist = useCallback(() => {
+        dispatch(removeTodolistAC(props.id))
+    }, [dispatch, props.id])
+    const changeTodolistTitle = useCallback((title: string) => {
+        dispatch(changeTodolistTitleAC(props.id, title))
+    }, [dispatch, props.id])
+    const changeFilter = useCallback((filter: FilterValuesType) => {
+        dispatch(changeTodolistFilterAC(props.id, filter))
+    }, [dispatch, props.id])
+    const addTask = useCallback((title: string) => {
+        dispatch(addTaskAC(props.id, title))
+    }, [dispatch])
+
+    let tasksForTodolist = tasks
+    if (todolist.filter === 'active') {
+        tasksForTodolist = tasks.filter(t => !t.isDone)
     }
-    const filterHandler = (value: FilterValuesType) => {
-        props.changeFilter(props.id, value)
-    }
-    const removeTask = (taskId: string) => {
-        props.removeTask(props.id, taskId)
-    }
-    const checkboxHandler = (taskId: string, isDone: boolean) => {
-        props.checkboxHandler(props.id, taskId, isDone)
-    }
-    const addTask = (title: string) => {
-        props.addTask(props.id, title)
-    }
-    const changeTodolistTitle = (title: string) => {
-        props.changeTodolistTitle(props.id, title)
-    }
-    const changeTaskTitle = (taskId: string, title: string) => {
-        props.changeTaskTitle(props.id, taskId, title)
+    if (todolist.filter === 'completed') {
+        tasksForTodolist = tasks.filter(t => t.isDone)
     }
 
     return (
         <div>
-            <h3 style={ {textAlign: 'center'} }><SuperSpan title={props.title} changeTitle={changeTodolistTitle}/>
+            <h3 style={{textAlign: 'center'}}><SuperSpan title={todolist.title} changeTitle={changeTodolistTitle}/>
                 <IconButton size="small" onClick={removeTodolist}>
-                    <DeleteIcon fontSize="inherit" />
+                    <DeleteIcon fontSize="inherit"/>
                 </IconButton>
             </h3>
             <SuperInput addHandler={addTask}/>
             <div>
                 {
-                    props.tasks.map(t => {
-                        return <div key={t.id} style={ {paddingLeft: '10px'} }>
-                            <Checkbox
-                                checked={t.isDone}
-                                onChange={(e) => checkboxHandler(t.id, e.currentTarget.checked)}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                            <SuperSpan title={t.title} changeTitle={(title) => changeTaskTitle(t.id, title)}/>
-                            <IconButton size="small" onClick={() => removeTask(t.id)}>
-                                <DeleteIcon fontSize="inherit" />
-                            </IconButton>
-                        </div>
-                    })
+                    tasksForTodolist.map(t => <Task key={t.id}
+                                                    task={t}
+                                                    todolistId={todolist.id}/>)
                 }
             </div>
-            <Button variant={props.filter === 'all' ? "contained" : "outlined"} onClick={() => filterHandler('all')}>All</Button>
-            <Button variant={props.filter === 'active' ? "contained" : "outlined"} onClick={() => filterHandler('active')}>Active</Button>
-            <Button variant={props.filter === 'completed' ? "contained" : "outlined"} onClick={() => filterHandler('completed')}>Completed</Button>
+            <Button variant={todolist.filter === 'all' ? "contained" : "outlined"}
+                    onClick={() => changeFilter('all')}>All</Button>
+            <Button variant={todolist.filter === 'active' ? "contained" : "outlined"}
+                    onClick={() => changeFilter('active')}>Active</Button>
+            <Button variant={todolist.filter === 'completed' ? "contained" : "outlined"}
+                    onClick={() => changeFilter('completed')}>Completed</Button>
         </div>
     )
-}
-
+})
