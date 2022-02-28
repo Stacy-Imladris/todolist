@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
     tasks: tasksReducer,
 })
 
-
+export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 export type AppRootState = ReturnType <typeof rootReducer>
 
 export const store = createStore(rootReducer)

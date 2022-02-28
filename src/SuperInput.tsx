@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {Fab, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
@@ -6,7 +6,7 @@ type SuperInputPropsType = {
     addHandler: (title: string) => void
 }
 
-export const SuperInput = React.memo((props: SuperInputPropsType) => {
+export const SuperInput = memo((props: SuperInputPropsType) => {
     console.log('SuperInput')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('Enter title')
@@ -15,8 +15,7 @@ export const SuperInput = React.memo((props: SuperInputPropsType) => {
         if (e.currentTarget.value === " " || e.currentTarget.value === '') {
             setError('Title is incorrect')
             setTitle('')
-        }
-        else {
+        } else {
             setTitle(e.currentTarget.value)
             setError('Title is correct')
         }
