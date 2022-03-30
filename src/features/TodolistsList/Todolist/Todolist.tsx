@@ -1,43 +1,49 @@
-import {memo, useCallback} from 'react';
-import {SuperInput} from './SuperInput';
-import {SuperSpan} from './SuperSpan';
+import {memo, useCallback, useEffect} from 'react';
+import {SuperInput} from '../../../components/SuperInput/SuperInput';
+import {SuperSpan} from '../../../components/SuperSpan/SuperSpan';
 import {Button, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppRootState} from './state/store';
-import {Task} from './Task';
-import {FilterValuesType, todolistsActions, todolistsActionTypes, TodolistType} from './state/todolists-reducer';
-import {tasksActions, tasksActionTypes, TaskType} from './state/tasks-reducer';
-import {Dispatch} from 'redux';
+import {AppRootStateType} from '../../../app/store';
+import {Task} from './Task/Task';
+import {
+    FilterValuesType, todolistsActions, TodolistDomainType, deleteTodolist, updateTodolistTitle,
+} from '../todolists-reducer';
+import {createTask, fetchTasks} from '../tasks-reducer';
+import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 
 type TodolistPropsType = {
     id: string
 }
 export const Todolist = memo((props: TodolistPropsType) => {
     console.log('Todolist')
-    const dispatch = useDispatch<Dispatch<todolistsActionTypes | tasksActionTypes>>()
-    const todolist = useSelector<AppRootState, TodolistType>(state => state.todolists.filter(tl => tl.id === props.id)[0])
-    const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolist.id])
+    const todolist = useSelector<AppRootStateType, TodolistDomainType>(state => state.todolists.filter(tl => tl.id === props.id)[0])
+    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolist.id])
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTasks(props.id))
+    }, [])
 
     const removeTodolist = useCallback(() => {
-        dispatch(todolistsActions.removeTodolist(props.id))
+        dispatch(deleteTodolist(props.id))
     }, [dispatch, props.id])
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(todolistsActions.changeTodolistTitle(props.id, title))
+        dispatch(updateTodolistTitle(props.id, title))
     }, [dispatch, props.id])
     const changeFilter = useCallback((filter: FilterValuesType) => {
         dispatch(todolistsActions.changeTodolistFilter(props.id, filter))
     }, [dispatch, props.id])
     const addTask = useCallback((title: string) => {
-        dispatch(tasksActions.addTask(props.id, title))
+        dispatch(createTask(props.id, title))
     }, [dispatch, props.id])
 
     let tasksForTodolist = tasks
     if (todolist.filter === 'active') {
-        tasksForTodolist = tasks.filter(t => !t.isDone)
+        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (todolist.filter === 'completed') {
-        tasksForTodolist = tasks.filter(t => t.isDone)
+        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     return (
