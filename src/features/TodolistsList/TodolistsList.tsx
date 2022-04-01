@@ -24,7 +24,7 @@ export const TodolistsList = () => {
     }, [dispatch])
 
     if (!isLoggedIn) {
-        return <Navigate to={'/todolist/login'}/>
+        return <Navigate to={'/login'}/>
     }
 
     return <>
