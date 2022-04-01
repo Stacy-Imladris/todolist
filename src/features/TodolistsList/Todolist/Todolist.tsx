@@ -3,27 +3,21 @@ import {SuperInput} from '../../../components/SuperInput/SuperInput';
 import {SuperSpan} from '../../../components/SuperSpan/SuperSpan';
 import {Button, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../../app/store';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '../../../app/store';
 import {Task} from './Task/Task';
-import {
-    FilterValuesType, todolistsActions, TodolistDomainType, deleteTodolist, updateTodolistTitle,
-} from '../todolists-reducer';
+import {deleteTodolist, FilterValuesType, todolistsActions, updateTodolistTitle,} from '../todolists-reducer';
 import {createTask, fetchTasks} from '../tasks-reducer';
-import {TaskStatuses, TaskType} from '../../../api/todolists-api';
+import {TaskStatuses} from '../../../api/todolists-api';
 
 type TodolistPropsType = {
     id: string
 }
 export const Todolist = memo((props: TodolistPropsType) => {
     console.log('Todolist')
-    const todolist = useSelector<AppRootStateType, TodolistDomainType>(state => state.todolists.filter(tl => tl.id === props.id)[0])
-    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolist.id])
+    const todolist = useAppSelector(state => state.todolists.filter(tl => tl.id === props.id)[0])
+    const tasks = useAppSelector(state => state.tasks[todolist.id])
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchTasks(props.id))
-    }, [])
 
     const removeTodolist = useCallback(() => {
         dispatch(deleteTodolist(props.id))
@@ -49,11 +43,11 @@ export const Todolist = memo((props: TodolistPropsType) => {
     return (
         <div>
             <h3 style={{textAlign: 'center'}}><SuperSpan title={todolist.title} changeTitle={changeTodolistTitle}/>
-                <IconButton size="small" onClick={removeTodolist}>
+                <IconButton size="small" onClick={removeTodolist} disabled={todolist.entityStatus === 'loading'}>
                     <DeleteIcon fontSize="inherit"/>
                 </IconButton>
             </h3>
-            <SuperInput addHandler={addTask}/>
+            <SuperInput addHandler={addTask} disabled={todolist.entityStatus === 'loading'}/>
             <div>
                 {tasksForTodolist.map(t => <Task key={t.id}
                                                     taskId={t.id}

@@ -2,10 +2,10 @@ import {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton} from '@mui/material';
 import {SuperSpan} from '../../../../components/SuperSpan/SuperSpan';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../../../app/store';
-import {deleteTask, tasksActions, updateTask} from '../../tasks-reducer';
-import {TaskStatuses, TaskType} from '../../../../api/todolists-api';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '../../../../app/store';
+import {deleteTask, updateTask} from '../../tasks-reducer';
+import {TaskStatuses} from '../../../../api/todolists-api';
 
 type TaskPropsType = {
     taskId: string
@@ -13,7 +13,8 @@ type TaskPropsType = {
 }
 export const Task = memo((props: TaskPropsType) => {
     console.log('Task')
-    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks[props.todolistId].filter(t => t.id === props.taskId)[0])
+
+    const task = useAppSelector(state => state.tasks[props.todolistId].filter(t => t.id === props.taskId)[0])
     const dispatch = useDispatch()
 
     const removeTask = useCallback(() => {

@@ -1,18 +1,13 @@
-import {v1} from 'uuid';
 import {todolistsActions} from './todolists-reducer';
 import {AppRootStateType, AppThunk, InferActionTypes} from '../../app/store';
-import {
-    TaskPriorities,
-    TaskStatuses,
-    TaskType,
-    todolistsAPI,
-    TodolistType,
-    UpdateTaskModelType
-} from '../../api/todolists-api';
+import {authAPI, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api';
+import {appActions} from '../../app/app-reducer';
+import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {authActions} from '../Login/auth-reducer';
 
-const initialState: TasksStateType = {}
+const tasksInitialState: TasksStateType = {}
 
-export const tasksReducer = (state = initialState, action: TasksActionTypes): TasksStateType => {
+export const tasksReducer = (state = tasksInitialState, action: TasksActionTypes): TasksStateType => {
     switch (action.type) {
         case 'REMOVE_TASK':
             return {
@@ -21,14 +16,13 @@ export const tasksReducer = (state = initialState, action: TasksActionTypes): Ta
             }
         case 'ADD_TASK':
             return {
-                ...state, [action.payload.task.todoListId]: [action.payload.task, ...state[action.payload.task.todoListId]]
+                ...state,
+                [action.payload.task.todoListId]: [action.payload.task, ...state[action.payload.task.todoListId]]
             }
         case 'CHANGE_TASK':
             return {
                 ...state,
-                [action.payload.Tid]: state[action.payload.Tid].map(t => t.id === action.payload.taskId ? {
-                    ...t, ...action.payload.domainModel
-                } : t)
+                [action.payload.Tid]: state[action.payload.Tid].map(t => t.id === action.payload.taskId ? {...t, ...action.payload.domainModel} : t)
             }
         case 'REMOVE_TODOLIST': {
             let copyState = {...state}
@@ -44,6 +38,8 @@ export const tasksReducer = (state = initialState, action: TasksActionTypes): Ta
             return {...state, [action.payload.Tid]: action.payload.tasks}
         case 'ADD_TODOLIST':
             return {...state, [action.payload.todolist.id]: []}
+        case 'CLEAR_DATA':
+            return {}
         default:
             return state
     }
@@ -58,20 +54,46 @@ export const tasksActions = {
 }
 
 export const fetchTasks = (Tid: string): AppThunk => async dispatch => {
-    const res = await todolistsAPI.getTasks(Tid)
-    dispatch(tasksActions.setTasks(Tid, res.data.items))
+    dispatch(appActions.setAppStatus('loading'))
+    try {
+        const res = await todolistsAPI.getTasks(Tid)
+        dispatch(tasksActions.setTasks(Tid, res.data.items))
+        dispatch(appActions.setAppStatus('succeeded'))
+    } catch (error) {
+        handleServerNetworkError(dispatch, error as Error)
+    }
 }
 export const deleteTask = (todolistId: string, taskId: string): AppThunk => async dispatch => {
-    const res = await todolistsAPI.deleteTask(todolistId, taskId)
-    dispatch(tasksActions.removeTask(todolistId, taskId))
+    dispatch(appActions.setAppStatus('loading'))
+    try {
+        const res = await todolistsAPI.deleteTask(todolistId, taskId)
+        if (res.data.resultCode === 0) {
+            dispatch(tasksActions.removeTask(todolistId, taskId))
+            dispatch(appActions.setAppStatus('succeeded'))
+        } else {
+            handleServerAppError(dispatch, res.data)
+        }
+    } catch (error) {
+        handleServerNetworkError(dispatch, error as Error)
+    }
 }
 export const createTask = (todolistId: string, title: string): AppThunk => async dispatch => {
-    const res = await todolistsAPI.createTask(todolistId, title)
-    dispatch(tasksActions.addTask(res.data.data.item))
+    dispatch(appActions.setAppStatus('loading'))
+    try {
+        const res = await todolistsAPI.createTask(todolistId, title)
+        if (res.data.resultCode === 0) {
+            dispatch(tasksActions.addTask(res.data.data.item))
+            dispatch(appActions.setAppStatus('succeeded'))
+        } else {
+            handleServerAppError(dispatch, res.data)
+        }
+    } catch (error) {
+        handleServerNetworkError(dispatch, error as Error)
+    }
 }
 export const updateTask = (todolistId: string, taskId: string, domainModel: Partial<UpdateTaskModelType>): AppThunk => async (dispatch, getState: () => AppRootStateType) => {
-    const state = getState()
-    const task = state.tasks[todolistId].find(t => t.id === taskId)
+    dispatch(appActions.setAppStatus('loading'))
+    const task = getState().tasks[todolistId].find(t => t.id === taskId)
     if (!task) {
         console.warn('task not found in the state')
         return
@@ -85,8 +107,17 @@ export const updateTask = (todolistId: string, taskId: string, domainModel: Part
         deadline: task.deadline,
         ...domainModel
     }
-    const res = await todolistsAPI.updateTask(todolistId, taskId, apiModel)
-    dispatch(tasksActions.changeTask(todolistId, taskId, domainModel))
+    try {
+        const res = await todolistsAPI.updateTask(todolistId, taskId, apiModel)
+        if (res.data.resultCode === 0) {
+            dispatch(tasksActions.changeTask(todolistId, taskId, domainModel))
+            dispatch(appActions.setAppStatus('succeeded'))
+        } else {
+            handleServerAppError(dispatch, res.data)
+        }
+    } catch (error) {
+        handleServerNetworkError(dispatch, error as Error)
+    }
 }
 
 export type TasksStateType = {
@@ -96,3 +127,4 @@ export type TasksActionTypes = InferActionTypes<typeof tasksActions>
     | ReturnType<typeof todolistsActions.removeTodolist>
     | ReturnType<typeof todolistsActions.addTodolist>
     | ReturnType<typeof todolistsActions.setTodolists>
+    | ReturnType<typeof todolistsActions.clearData>

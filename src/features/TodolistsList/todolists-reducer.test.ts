@@ -11,8 +11,8 @@ beforeEach(() => {
     todolistId2 = v1()
     newTodolistTitle = 'New Title'
     todolistsStartState = [
-        {id: todolistId1, title: "What to learn", addedDate: '', order: 0, filter: "all"},
-        {id: todolistId2, title: "What to buy", addedDate: '', order: 0, filter: "all"}
+        {id: todolistId1, title: "What to learn", addedDate: '', order: 0, filter: "all", entityStatus: 'idle'},
+        {id: todolistId2, title: "What to buy", addedDate: '', order: 0, filter: "all", entityStatus: 'idle'}
     ]
 })
 
@@ -53,4 +53,11 @@ test('todolists should be set to the state', () => {
     const endState = todolistsReducer([], todolistsActions.setTodolists(todolistsStartState))
 
     expect(endState.length).toBe(2)
+})
+
+test('correct entity status should be changed', () => {
+    const endState = todolistsReducer(todolistsStartState, todolistsActions.changeTodolistEntityStatus(todolistId1, 'loading'))
+
+    expect(endState[0].entityStatus).toBe('loading')
+    expect(endState[1].entityStatus).toBe('idle')
 })
