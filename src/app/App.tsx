@@ -57,9 +57,9 @@ export function App() {
             <Container fixed>
                 <Routes>
                     <Route path="/todolist" element={<TodolistsList/>}/>
-                    <Route path="todolist/login" element={<Login/>}/>
+                    <Route path="/todolist/login" element={<Login/>}/>
                     <Route path="/todolist/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
-                    <Route path="todolist/*" element={<Navigate to="/todolist/404"/>}/>
+                    <Route path="/todolist/*" element={<Navigate to="/todolist/404"/>}/>
                 </Routes>
             </Container>
         </div>
