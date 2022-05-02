@@ -1,10 +1,11 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux';
-import {TodolistsActionTypes, todolistsReducer} from '../features/TodolistsList/todolists-reducer';
-import {TasksActionTypes, tasksReducer} from '../features/TodolistsList/tasks-reducer';
-import {AppActionTypes, appReducer} from './app-reducer';
-import thunk, {ThunkAction} from 'redux-thunk';
-import {TypedUseSelectorHook, useSelector} from 'react-redux';
-import {AuthActionTypes, authReducer} from '../features/Login/auth-reducer';
+import {combineReducers} from 'redux';
+import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
+import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
+import {appReducer} from './app-reducer';
+import thunk from 'redux-thunk';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {authReducer} from '../features/Login/auth-reducer';
+import {configureStore} from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
@@ -13,15 +14,17 @@ const rootReducer = combineReducers({
     auth: authReducer,
 })
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk),
+})
 
-export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 //types
-export type AppRootStateType = ReturnType <typeof store.getState>
-export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
-export type AppActionsType = TodolistsActionTypes | TasksActionTypes | AppActionTypes | AuthActionTypes
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 // @ts-ignore
 window.store = store

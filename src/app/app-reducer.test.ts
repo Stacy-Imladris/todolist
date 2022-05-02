@@ -1,3 +1,4 @@
+/*
 import {appActions, AppInitialStateType, appReducer} from './app-reducer';
 
 let appStartState: AppInitialStateType
@@ -26,4 +27,5 @@ test('correct initialized value should be set', () => {
     const endState = appReducer(appStartState, appActions.setAppInitialized(true))
 
     expect(endState.isInitialized).toBe(true)
-})
+})*/
+export {}

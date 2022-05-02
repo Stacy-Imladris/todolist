@@ -1,4 +1,4 @@
-import {memo, useCallback, useEffect} from 'react';
+import {memo, useCallback} from 'react';
 import {SuperInput} from '../../../components/SuperInput/SuperInput';
 import {SuperSpan} from '../../../components/SuperSpan/SuperSpan';
 import {Button, IconButton} from '@mui/material';
@@ -6,8 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '../../../app/store';
 import {Task} from './Task/Task';
-import {deleteTodolist, FilterValuesType, todolistsActions, updateTodolistTitle,} from '../todolists-reducer';
-import {createTask, fetchTasks} from '../tasks-reducer';
+import {
+    changeTodolistFilter,
+    deleteTodolist,
+    FilterValuesType,
+    updateTodolistTitle,
+} from '../todolists-reducer';
+import {createTask} from '../tasks-reducer';
 import {TaskStatuses} from '../../../api/todolists-api';
 
 type TodolistPropsType = {
@@ -26,7 +31,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
         dispatch(updateTodolistTitle(props.id, title))
     }, [dispatch, props.id])
     const changeFilter = useCallback((filter: FilterValuesType) => {
-        dispatch(todolistsActions.changeTodolistFilter(props.id, filter))
+        dispatch(changeTodolistFilter({Tid: props.id, filter}))
     }, [dispatch, props.id])
     const addTask = useCallback((title: string) => {
         dispatch(createTask(props.id, title))
