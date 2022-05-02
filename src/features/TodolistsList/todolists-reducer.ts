@@ -43,6 +43,7 @@ export const todolistsActions = {
         ({type: 'CLEAR_DATA'} as const),
 }
 
+//thunks
 export const fetchTodolists = (): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -54,6 +55,7 @@ export const fetchTodolists = (): AppThunk => async dispatch => {
         handleServerNetworkError(dispatch, error as Error)
     }
 }
+
 export const deleteTodolist = (Tid: string): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     dispatch(todolistsActions.changeTodolistEntityStatus(Tid, 'loading'))
@@ -71,6 +73,7 @@ export const deleteTodolist = (Tid: string): AppThunk => async dispatch => {
         dispatch(todolistsActions.changeTodolistEntityStatus(Tid, 'failed'))
     }
 }
+
 export const createTodolist = (title: string): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -85,6 +88,7 @@ export const createTodolist = (title: string): AppThunk => async dispatch => {
         handleServerNetworkError(dispatch, error as Error)
     }
 }
+
 export const updateTodolistTitle = (todolistId: string, title: string): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     dispatch(todolistsActions.changeTodolistEntityStatus(todolistId, 'loading'))
@@ -104,6 +108,7 @@ export const updateTodolistTitle = (todolistId: string, title: string): AppThunk
     }
 }
 
+//types
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType

@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import {useCallback, useEffect} from 'react';
 import {initializeApp} from './app-reducer';
 import {logout} from '../features/Login/auth-reducer';
+import {PATH} from '../enums/paths';
 
 export function App() {
     console.log('App')
@@ -56,10 +57,11 @@ export function App() {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path="/" element={<TodolistsList/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
-                    <Route path="*" element={<Navigate to="/404"/>}/>
+                    <Route path='/' element={<Navigate to={PATH.LOGIN}/>}/>
+                    <Route path={PATH.MAIN} element={<TodolistsList/>}/>
+                    <Route path={PATH.LOGIN} element={<Login/>}/>
+                    <Route path={PATH.ERROR_404} element={<h1>404: PAGE NOT FOUND</h1>}/>
+                    <Route path="*" element={<Navigate to={PATH.ERROR_404}/>}/>
                 </Routes>
             </Container>
         </div>

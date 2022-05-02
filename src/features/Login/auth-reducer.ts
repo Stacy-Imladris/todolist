@@ -21,6 +21,7 @@ export const authActions = {
     setIsLoggedIn: (isLoggedIn: boolean) => ({type: 'LOGIN/SET_IS_LOGGED_IN', payload: {isLoggedIn}} as const),
 }
 
+//thunks
 export const login = (data: LoginParamsType): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -52,5 +53,6 @@ export const logout = (): AppThunk => async dispatch => {
     }
 }
 
+//types
 export type AuthInitialStateType = typeof authInitialState
 export type AuthActionTypes = InferActionTypes<typeof authActions>

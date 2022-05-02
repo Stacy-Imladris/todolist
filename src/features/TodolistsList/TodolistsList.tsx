@@ -6,6 +6,7 @@ import {Grid, Paper} from '@mui/material';
 import {SuperInput} from '../../components/SuperInput/SuperInput';
 import {Todolist} from './Todolist/Todolist';
 import {Navigate} from 'react-router-dom';
+import {PATH} from '../../enums/paths';
 
 export const TodolistsList = () => {
     const todolists = useAppSelector(state => state.todolists)
@@ -23,9 +24,7 @@ export const TodolistsList = () => {
         dispatch(createTodolist(title))
     }, [dispatch])
 
-    if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
-    }
+    if (!isLoggedIn) return <Navigate to={PATH.LOGIN}/>
 
     return <>
         <Grid container style={{padding: '20px'}}>

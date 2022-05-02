@@ -26,6 +26,7 @@ export const appActions = {
     setAppInitialized: (isInitialized: boolean) => ({type: 'APP/SET_IS_INITIALIZED', payload: {isInitialized}} as const),
 }
 
+//thunk
 export const initializeApp = (): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -34,7 +35,7 @@ export const initializeApp = (): AppThunk => async dispatch => {
             dispatch(authActions.setIsLoggedIn(true))
             dispatch(appActions.setAppStatus('succeeded'))
         } else {
-            handleServerAppError(dispatch, res.data)
+            dispatch(appActions.setAppStatus('failed'))
         }
     } catch (error) {
         handleServerNetworkError(dispatch, error as Error)
@@ -43,6 +44,7 @@ export const initializeApp = (): AppThunk => async dispatch => {
     }
 }
 
+//types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type AppInitialStateType = typeof appInitialState
 export type AppActionTypes = InferActionTypes<typeof appActions>

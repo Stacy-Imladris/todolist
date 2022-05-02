@@ -53,6 +53,7 @@ export const tasksActions = {
         ({type: 'CHANGE_TASK', payload: {Tid, taskId, domainModel}} as const),
 }
 
+//thunks
 export const fetchTasks = (Tid: string): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -63,6 +64,7 @@ export const fetchTasks = (Tid: string): AppThunk => async dispatch => {
         handleServerNetworkError(dispatch, error as Error)
     }
 }
+
 export const deleteTask = (todolistId: string, taskId: string): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -77,6 +79,7 @@ export const deleteTask = (todolistId: string, taskId: string): AppThunk => asyn
         handleServerNetworkError(dispatch, error as Error)
     }
 }
+
 export const createTask = (todolistId: string, title: string): AppThunk => async dispatch => {
     dispatch(appActions.setAppStatus('loading'))
     try {
@@ -91,6 +94,7 @@ export const createTask = (todolistId: string, title: string): AppThunk => async
         handleServerNetworkError(dispatch, error as Error)
     }
 }
+
 export const updateTask = (todolistId: string, taskId: string, domainModel: Partial<UpdateTaskModelType>): AppThunk => async (dispatch, getState: () => AppRootStateType) => {
     dispatch(appActions.setAppStatus('loading'))
     const task = getState().tasks[todolistId].find(t => t.id === taskId)
@@ -120,6 +124,7 @@ export const updateTask = (todolistId: string, taskId: string, domainModel: Part
     }
 }
 
+//types
 export type TasksStateType = {
     [key: string]: TaskType[]
 }
