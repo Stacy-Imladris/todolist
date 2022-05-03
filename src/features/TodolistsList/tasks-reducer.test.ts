@@ -3,7 +3,7 @@ import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {todolistsStartState} from './todolists-reducer.test';
 import {createTask, deleteTask, fetchTasks, updateTask} from './tasks-actions';
 import {tasksReducer, TasksStateType} from './tasks-reducer';
-import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-actions';
+import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-reducer';
 
 let todolistId1: string
 let todolistId2: string

@@ -1,8 +1,12 @@
 import {TaskType} from '../../api/todolists-api';
 import {createSlice} from '@reduxjs/toolkit';
 import {createTask, deleteTask, fetchTasks, updateTask} from './tasks-actions';
-import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-actions';
-import {clearData} from './todolists-reducer';
+import {
+    clearData,
+    createTodolist,
+    deleteTodolist,
+    fetchTodolists
+} from './todolists-reducer';
 
 const tasksInitialState: TasksStateType = {}
 

@@ -5,7 +5,6 @@ import {Button, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from '../../../store/store';
 import {Task} from './Task/Task';
-import {FilterValuesType,} from '../todolists-reducer';
 import {TaskStatuses} from '../../../api/todolists-api';
 import {tasksActions, todolistsActions, todolistsAsyncActions} from '../index';
 
