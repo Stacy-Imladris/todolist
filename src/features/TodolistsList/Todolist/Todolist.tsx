@@ -3,39 +3,41 @@ import {SuperInput} from '../../../components/SuperInput/SuperInput';
 import {SuperSpan} from '../../../components/SuperSpan/SuperSpan';
 import {Button, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useDispatch} from 'react-redux';
-import {useAppSelector} from '../../../store/store';
+import {useActions, useAppSelector} from '../../../store/store';
 import {Task} from './Task/Task';
-import {
-    changeTodolistFilter,
-    deleteTodolist,
-    FilterValuesType,
-    updateTodolistTitle,
-} from '../todolists-reducer';
-import {createTask} from '../tasks-reducer';
+import {FilterValuesType,} from '../todolists-reducer';
 import {TaskStatuses} from '../../../api/todolists-api';
+import {tasksActions, todolistsActions, todolistsAsyncActions} from '../index';
 
 type TodolistPropsType = {
-    id: string
+    Tid: string
 }
-export const Todolist = memo(({id}: TodolistPropsType) => {
-    console.log('Todolist')
-    const {title, filter, entityStatus} = useAppSelector(state => state.todolists.filter(tl => tl.id === id)[0])
-    const tasks = useAppSelector(state => state.tasks[id])
-    const dispatch = useDispatch()
+export const Todolist = memo(({Tid}: TodolistPropsType) => {
+    const {
+        title,
+        filter,
+        entityStatus
+    } = useAppSelector(state => state.todolists.filter(tl => tl.id === Tid)[0])
+    const tasks = useAppSelector(state => state.tasks[Tid])
+    const {
+        createTask,
+        deleteTodolist,
+        updateTodolistTitle,
+        changeTodolistFilter
+    } = useActions({...tasksActions, ...todolistsAsyncActions, ...todolistsActions})
 
-    const removeTodolist = useCallback(() => {
-        dispatch(deleteTodolist(id))
-    }, [dispatch, id])
-    const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(updateTodolistTitle({Tid: id, title}))
-    }, [dispatch, id])
+    const removeTodolist = useCallback(() => deleteTodolist(Tid), [Tid])
+
+    const changeTodolistTitle = useCallback((title: string) => updateTodolistTitle({
+        Tid,
+        title
+    }), [Tid])
+
     const changeFilter = useCallback((filter: FilterValuesType) => {
-        dispatch(changeTodolistFilter({Tid: id, filter}))
-    }, [dispatch, id])
-    const addTask = useCallback((title: string) => {
-        dispatch(createTask({Tid: id, title}))
-    }, [dispatch, id])
+        changeTodolistFilter({Tid, filter})
+    }, [Tid])
+
+    const addTask = useCallback((title: string) => createTask({Tid, title}), [Tid])
 
     let tasksForTodolist = tasks
     if (filter === 'active') {
@@ -47,28 +49,24 @@ export const Todolist = memo(({id}: TodolistPropsType) => {
 
     return (
         <div>
-            <h3 style={{textAlign: 'center'}}><SuperSpan title={title}
-                                                         changeTitle={changeTodolistTitle}/>
+            <h3 style={{textAlign: 'center'}}>
+                <SuperSpan title={title} changeTitle={changeTodolistTitle}/>
                 <IconButton size="small" onClick={removeTodolist}
                             disabled={entityStatus === 'loading'}>
                     <DeleteIcon fontSize="inherit"/>
                 </IconButton>
             </h3>
-            <SuperInput addHandler={addTask}
-                        disabled={entityStatus === 'loading'}/>
+            <SuperInput addHandler={addTask} disabled={entityStatus === 'loading'}/>
             <div>
-                {tasksForTodolist.map(t => <Task key={t.id}
-                                                 taskId={t.id}
-                                                 todolistId={id}/>)}
+                {tasksForTodolist.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)}
             </div>
             <div style={{marginTop: '5px'}}>
                 <Button variant={filter === 'all' ? 'contained' : 'outlined'}
                         onClick={() => changeFilter('all')}>All</Button>
                 <Button variant={filter === 'active' ? 'contained' : 'outlined'}
                         onClick={() => changeFilter('active')}>Active</Button>
-                <Button
-                    variant={filter === 'completed' ? 'contained' : 'outlined'}
-                    onClick={() => changeFilter('completed')}>Completed</Button>
+                <Button variant={filter === 'completed' ? 'contained' : 'outlined'}
+                        onClick={() => changeFilter('completed')}>Completed</Button>
             </div>
         </div>
     )

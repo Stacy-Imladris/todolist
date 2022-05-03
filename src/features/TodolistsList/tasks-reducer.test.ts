@@ -1,9 +1,9 @@
 import {v1} from 'uuid';
-import {createTask, deleteTask, fetchTasks, tasksReducer, TasksStateType, updateTask
-} from './tasks-reducer';
-import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {todolistsStartState} from './todolists-reducer.test';
+import {createTask, deleteTask, fetchTasks, updateTask} from './tasks-actions';
+import {tasksReducer, TasksStateType} from './tasks-reducer';
+import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-actions';
 
 let todolistId1: string
 let todolistId2: string

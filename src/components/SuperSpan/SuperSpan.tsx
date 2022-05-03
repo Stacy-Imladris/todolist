@@ -1,12 +1,12 @@
-import {ChangeEvent, FocusEvent, KeyboardEvent, memo, useState} from 'react';
+import {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {TextField} from '@mui/material';
 
 type SuperSpanPropsType = {
     title: string
     changeTitle: (title: string) => void
 }
+
 export const SuperSpan = memo(({title, changeTitle}: SuperSpanPropsType) => {
-    console.log('SuperSpan')
     const [value, setValue] = useState<string>(title)
     const [temp, setTemp] = useState<string>(title)
     const [input, setInput] = useState<boolean>(false)
@@ -16,6 +16,7 @@ export const SuperSpan = memo(({title, changeTitle}: SuperSpanPropsType) => {
         setTemp(value)
         setInput(true)
     }
+
     const inputOff = () => {
         setInput(false)
         if (error === "Title is incorrect") {

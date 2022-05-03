@@ -1,4 +1,3 @@
-import React from 'react'
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -8,12 +7,12 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import {login} from './auth-reducer';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {Navigate} from 'react-router-dom';
 import {LoginParamsType} from '../../api/todolists-api';
 import {PATH} from '../../enums/paths';
-import {selectIsLoggedIn} from '../../store/selectors';
+import {selectIsLoggedIn} from './selectors';
+import {login} from './auth-actions';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn)

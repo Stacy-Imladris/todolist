@@ -1,46 +1,37 @@
-import {useDispatch} from 'react-redux';
-import {useAppSelector} from '../../store/store';
-import {createTodolist, fetchTodolists} from './todolists-reducer';
-import {useCallback, useEffect} from 'react';
+import {useActions, useAppSelector} from '../../store/store';
+import {useEffect} from 'react';
 import {Grid, Paper} from '@mui/material';
 import {SuperInput} from '../../components/SuperInput/SuperInput';
 import {Todolist} from './Todolist/Todolist';
 import {Navigate} from 'react-router-dom';
 import {PATH} from '../../enums/paths';
-import {selectIsLoggedIn, selectTodolists} from '../../store/selectors';
+import {selectTodolists} from './selectors';
+import {authSelectors} from '../Login';
+import {todolistsAsyncActions} from './index';
 
 export const TodolistsList = () => {
     const todolists = useAppSelector(selectTodolists)
-    const isLoggedIn = useAppSelector(selectIsLoggedIn)
-    const dispatch = useDispatch()
+    const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
+    const {fetchTodolists, createTodolist} = useActions(todolistsAsyncActions)
 
     useEffect(() => {
-        if (!isLoggedIn) {
-            return
-        }
-        dispatch(fetchTodolists())
+        if (!isLoggedIn) return;
+        fetchTodolists()
     }, [])
-
-    const addTodolist = useCallback((title: string) => {
-        dispatch(createTodolist(title))
-    }, [dispatch])
 
     if (!isLoggedIn) return <Navigate to={PATH.LOGIN}/>
 
     return <>
         <Grid container style={{padding: '20px'}}>
-            <SuperInput addHandler={addTodolist}/>
+            <SuperInput addHandler={createTodolist}/>
         </Grid>
         <Grid container spacing={5}>
-            {todolists.map(tl => {
-                return <Grid item key={tl.id}>
+            {todolists.map(({id}) => <Grid item key={id}>
                     <Paper elevation={3} style={{padding: '10px'}}>
-                        <Todolist key={tl.id}
-                                  id={tl.id}
-                        />
+                        <Todolist Tid={id}/>
                     </Paper>
                 </Grid>
-            })}
+            )}
         </Grid>
     </>
 }

@@ -1,14 +1,14 @@
 import {v1} from 'uuid';
 import {
-    changeTodolistEntityStatus,
-    changeTodolistFilter,
     createTodolist,
     deleteTodolist,
     fetchTodolists,
-    FilterValuesType,
-    TodolistDomainType,
-    todolistsReducer,
     updateTodolistTitle
+} from './todolists-actions';
+import {
+    changeTodolistEntityStatus,
+    changeTodolistFilter,
+    FilterValuesType, TodolistDomainType, todolistsReducer
 } from './todolists-reducer';
 
 let todolistId1: string

@@ -1,4 +1,3 @@
-import './App.css';
 import {
     AppBar,
     Button,
@@ -12,33 +11,23 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
-import {useAppSelector} from '../store/store';
+import {useActions, useAppSelector} from '../store/store';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
-import {useDispatch} from 'react-redux';
-import {useCallback, useEffect} from 'react';
-import {initializeApp} from './app-reducer';
-import {logout} from '../features/Login/auth-reducer';
+import {useEffect} from 'react';
 import {PATH} from '../enums/paths';
-import {
-    selectAppIsInitialized,
-    selectAppStatus,
-    selectIsLoggedIn
-} from '../store/selectors';
+import {selectAppIsInitialized, selectAppStatus} from './selectors';
+import {authActions, authSelectors} from '../features/Login';
+import {appAsyncActions} from './index';
 
-export function App() {
-    console.log('App')
+export const App = () => {
     const status = useAppSelector(selectAppStatus)
     const isInitialized = useAppSelector(selectAppIsInitialized)
-    const isLoggedIn = useAppSelector(selectIsLoggedIn)
-    const dispatch = useDispatch()
+    const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
+    const {initializeApp, logout} = useActions({...appAsyncActions, ...authActions})
 
     useEffect(() => {
-        dispatch(initializeApp())
-    }, [])
-
-    const logoutHandler = useCallback(() => {
-        dispatch(logout())
+        initializeApp()
     }, [])
 
     if (!isInitialized) {
@@ -56,7 +45,7 @@ export function App() {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>News</Typography>
-                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+                    {isLoggedIn && <Button color="inherit" onClick={logout}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
@@ -72,5 +61,3 @@ export function App() {
         </div>
     )
 }
-
-export default App

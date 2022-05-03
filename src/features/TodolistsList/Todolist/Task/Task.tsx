@@ -2,31 +2,29 @@ import {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton} from '@mui/material';
 import {SuperSpan} from '../../../../components/SuperSpan/SuperSpan';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useDispatch} from 'react-redux';
-import {useAppSelector} from '../../../../store/store';
-import {deleteTask, updateTask} from '../../tasks-reducer';
+import {useActions, useAppSelector} from '../../../../store/store';
 import {TaskStatuses} from '../../../../api/todolists-api';
+import {tasksActions} from '../../index';
 
 type TaskPropsType = {
     taskId: string
-    todolistId: string
+    Tid: string
 }
-export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
-    console.log('Task')
-    const task = useAppSelector(state => state.tasks[todolistId].filter(t => t.id === taskId)[0])
-    const dispatch = useDispatch()
+export const Task = memo(({taskId, Tid}: TaskPropsType) => {
+    const task = useAppSelector(state => state.tasks[Tid].filter(t => t.id === taskId)[0])
+    const {deleteTask, updateTask} = useActions(tasksActions)
 
-    const removeTask = useCallback(() => {
-        dispatch(deleteTask({Tid: todolistId, taskId: taskId}))
-    }, [dispatch, todolistId, task.id])
+    const removeTask = useCallback(() => deleteTask({Tid, taskId}), [Tid, taskId])
 
-    const checkboxHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateTask({Tid: todolistId, taskId: task.id, domainModel: {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}}))
-    }, [dispatch, todolistId, task.id])
+    const checkboxHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => updateTask({
+        Tid,
+        taskId,
+        domainModel: {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
+    }), [Tid, taskId])
 
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(updateTask({Tid: todolistId, taskId: task.id, domainModel: {title}}))
-    }, [dispatch, todolistId, task.id])
+        updateTask({Tid, taskId, domainModel: {title}})
+    }, [Tid, taskId])
 
     return (
         <div style={{paddingLeft: '10px'}}>

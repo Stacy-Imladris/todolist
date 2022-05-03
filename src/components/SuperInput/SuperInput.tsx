@@ -8,7 +8,6 @@ type SuperInputPropsType = {
 }
 
 export const SuperInput = memo(({addHandler, disabled}: SuperInputPropsType) => {
-    console.log('SuperInput')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('Enter title')
 
@@ -52,5 +51,5 @@ export const SuperInput = memo(({addHandler, disabled}: SuperInputPropsType) => 
                 <AddIcon/>
             </Fab>
         </div>
-    );
+    )
 })

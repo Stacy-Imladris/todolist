@@ -1,9 +1,10 @@
 import {
     AppInitialStateType,
-    appReducer, initializeApp,
+    appReducer,
     setAppError,
     setAppStatus
 } from './app-reducer';
+import {initializeApp} from './app-actions';
 
 let appStartState: AppInitialStateType
 
