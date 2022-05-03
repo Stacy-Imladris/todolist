@@ -1,14 +1,30 @@
 import {authAPI} from '../api/todolists-api';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {setIsLoggedIn} from '../features/Login/auth-reducer';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AppDispatch} from './store';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const appInitialState = {
     status: 'idle' as RequestStatusType,
     error: null as null | string,
     isInitialized: false,
 }
+
+export const initializeApp = createAsyncThunk('app/initializeApp', async (param, {dispatch, rejectWithValue}) => {
+    dispatch(setAppStatus({status: 'loading'}))
+    try {
+        const res = await authAPI.me()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedIn({isLoggedIn: true}))
+            dispatch(setAppStatus({status: 'succeeded'}))
+        } else {
+            dispatch(setAppStatus({status: 'failed'}))
+            return rejectWithValue(null)
+        }
+    } catch (error) {
+        handleServerNetworkError(dispatch, error as Error)
+        return rejectWithValue(null)
+    }
+})
 
 const slice = createSlice({
     name: 'app',
@@ -20,32 +36,17 @@ const slice = createSlice({
         setAppError(state, action: PayloadAction<{error: null | string}>) {
             state.error = action.payload.error
         },
-        setAppInitialized(state, action: PayloadAction<{isInitialized: boolean}>) {
-            state.isInitialized = action.payload.isInitialized
-        },
+    },
+    extraReducers: builder => {
+        builder.addCase(initializeApp.fulfilled, (state) => {
+            state.isInitialized = true
+        })
     }
 })
 
 export const appReducer = slice.reducer
-export const {setAppStatus, setAppError, setAppInitialized} = slice.actions
-
-//thunk
-export const initializeApp = () => async (dispatch: AppDispatch) => {
-    dispatch(setAppStatus({status: 'loading'}))
-    try {
-        const res = await authAPI.me()
-        if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedIn({isLoggedIn: true}))
-            dispatch(setAppStatus({status: 'succeeded'}))
-        } else {
-            dispatch(setAppStatus({status: 'failed'}))
-        }
-    } catch (error) {
-        handleServerNetworkError(dispatch, error as Error)
-    } finally {
-        dispatch(setAppInitialized({isInitialized: true}))
-    }
-}
+export const {setAppStatus, setAppError} = slice.actions
 
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type AppInitialStateType = typeof appInitialState

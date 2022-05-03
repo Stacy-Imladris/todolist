@@ -8,16 +8,16 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import {useDispatch} from 'react-redux';
 import {login} from './auth-reducer';
-import {useAppSelector} from '../../app/store';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import {Navigate} from 'react-router-dom';
 import {LoginParamsType} from '../../api/todolists-api';
 import {PATH} from '../../enums/paths';
+import {selectIsLoggedIn} from '../../store/selectors';
 
 export const Login = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useDispatch()
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -39,8 +39,14 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
-            dispatch(login(values))
+        onSubmit: async (values, formikHelpers) => {
+            const action = await dispatch(login(values))
+            if (login.rejected.match(action)) {
+                if (action.payload?.fieldsErrors?.length) {
+                    const {field, error} = action.payload.fieldsErrors[0]
+                    formikHelpers.setFieldError(field, error)
+                }
+            }
         },
     })
 

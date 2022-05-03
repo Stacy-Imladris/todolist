@@ -1,5 +1,9 @@
-/*
-import {appActions, AppInitialStateType, appReducer} from './app-reducer';
+import {
+    AppInitialStateType,
+    appReducer, initializeApp,
+    setAppError,
+    setAppStatus
+} from './app-reducer';
 
 let appStartState: AppInitialStateType
 
@@ -12,20 +16,20 @@ beforeEach(() => {
 })
 
 test('correct status should be set', () => {
-    const endState = appReducer(appStartState, appActions.setAppStatus('loading'))
+    const endState = appReducer(appStartState, setAppStatus({status: 'loading'}))
 
     expect(endState.status).toBe('loading')
 })
 
 test('correct error message should be set', () => {
-    const endState = appReducer(appStartState, appActions.setAppError('Error'))
+    const endState = appReducer(appStartState, setAppError({error: 'Error'}))
 
     expect(endState.error).toBe('Error')
 })
 
 test('correct initialized value should be set', () => {
-    const endState = appReducer(appStartState, appActions.setAppInitialized(true))
+    const action = initializeApp.fulfilled(undefined, 'requestId')
+    const endState = appReducer(appStartState, action)
 
     expect(endState.isInitialized).toBe(true)
-})*/
-export {}
+})

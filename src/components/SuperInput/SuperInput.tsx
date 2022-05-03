@@ -7,7 +7,7 @@ type SuperInputPropsType = {
     disabled?: boolean
 }
 
-export const SuperInput = memo((props: SuperInputPropsType) => {
+export const SuperInput = memo(({addHandler, disabled}: SuperInputPropsType) => {
     console.log('SuperInput')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('Enter title')
@@ -21,10 +21,10 @@ export const SuperInput = memo((props: SuperInputPropsType) => {
             setError('Title is correct')
         }
     }
-    const addHandler = () => {
+    const onClickAddHandle = () => {
         let trTitle = title.trim()
         if (trTitle) {
-            props.addHandler(trTitle)
+            addHandler(trTitle)
             setTitle('')
             setError('Enter title')
         } else {
@@ -33,22 +33,22 @@ export const SuperInput = memo((props: SuperInputPropsType) => {
     }
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            addHandler()
+            onClickAddHandle()
             setTitle('')
         }
     }
 
     return (
         <div>
-            <TextField disabled={props.disabled}
+            <TextField disabled={disabled}
                        error={error === 'Title is incorrect'}
                        id="outlined-basic"
                        label={error} variant="outlined"
                        onChange={onChangeHandler}
                        onKeyPress={onKeyHandler}
                        value={title}/>
-            <Fab color="primary" onClick={addHandler} size="large"
-                 style={{marginLeft: '10px'}} disabled={props.disabled}>
+            <Fab color="primary" onClick={onClickAddHandle} size="large"
+                 style={{marginLeft: '10px'}} disabled={disabled}>
                 <AddIcon/>
             </Fab>
         </div>

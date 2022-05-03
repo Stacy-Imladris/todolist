@@ -5,35 +5,35 @@ type SuperSpanPropsType = {
     title: string
     changeTitle: (title: string) => void
 }
-export const SuperSpan = memo((props: SuperSpanPropsType) => {
+export const SuperSpan = memo(({title, changeTitle}: SuperSpanPropsType) => {
     console.log('SuperSpan')
-    const [title, setTitle] = useState<string>(props.title)
-    const [temp, setTemp] = useState<string>(props.title)
+    const [value, setValue] = useState<string>(title)
+    const [temp, setTemp] = useState<string>(title)
     const [input, setInput] = useState<boolean>(false)
     const [error, setError] = useState<string>('Change title')
 
     const inputOn = () => {
-        setTemp(title)
+        setTemp(value)
         setInput(true)
     }
     const inputOff = () => {
         setInput(false)
         if (error === "Title is incorrect") {
-            setTitle(temp)
+            setValue(temp)
             setError('Change title')
         } else {
             let trTitle = title.trim()
             if (trTitle) {
-                props.changeTitle(trTitle)
+                changeTitle(trTitle)
             }
         }
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.value === " " || e.currentTarget.value === '') {
             setError('Title is incorrect')
-            setTitle('')
+            setValue('')
         } else {
-            setTitle(e.currentTarget.value)
+            setValue(e.currentTarget.value)
             setError('Title is correct')
         }
     }
@@ -52,6 +52,6 @@ export const SuperSpan = memo((props: SuperSpanPropsType) => {
                    onKeyPress={onKeyHandler}
                    onBlur={inputOff}
                    autoFocus
-                   value={title}/>
-        : <span onDoubleClick={inputOn}>{props.title}</span>
+                   value={value}/>
+        : <span onDoubleClick={inputOn}>{title}</span>
 })

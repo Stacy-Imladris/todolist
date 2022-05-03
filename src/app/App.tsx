@@ -12,7 +12,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
-import {useAppSelector} from './store';
+import {useAppSelector} from '../store/store';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {useDispatch} from 'react-redux';
@@ -20,12 +20,17 @@ import {useCallback, useEffect} from 'react';
 import {initializeApp} from './app-reducer';
 import {logout} from '../features/Login/auth-reducer';
 import {PATH} from '../enums/paths';
+import {
+    selectAppIsInitialized,
+    selectAppStatus,
+    selectIsLoggedIn
+} from '../store/selectors';
 
 export function App() {
     console.log('App')
-    const status = useAppSelector(state => state.app.status)
-    const isInitialized = useAppSelector((state) => state.app.isInitialized)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const status = useAppSelector(selectAppStatus)
+    const isInitialized = useAppSelector(selectAppIsInitialized)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {

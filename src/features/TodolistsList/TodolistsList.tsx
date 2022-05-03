@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {useAppSelector} from '../../app/store';
+import {useAppSelector} from '../../store/store';
 import {createTodolist, fetchTodolists} from './todolists-reducer';
 import {useCallback, useEffect} from 'react';
 import {Grid, Paper} from '@mui/material';
@@ -7,10 +7,11 @@ import {SuperInput} from '../../components/SuperInput/SuperInput';
 import {Todolist} from './Todolist/Todolist';
 import {Navigate} from 'react-router-dom';
 import {PATH} from '../../enums/paths';
+import {selectIsLoggedIn, selectTodolists} from '../../store/selectors';
 
 export const TodolistsList = () => {
-    const todolists = useAppSelector(state => state.todolists)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const todolists = useAppSelector(selectTodolists)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
