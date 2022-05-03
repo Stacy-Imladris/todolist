@@ -28,14 +28,8 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
 
     const removeTodolist = useCallback(() => deleteTodolist(Tid), [Tid])
 
-    const changeTodolistTitle = useCallback((title: string) => updateTodolistTitle({
-        Tid,
-        title
-    }), [Tid])
-
-    const changeFilter = useCallback((filter: FilterValuesType) => {
-        changeTodolistFilter({Tid, filter})
-    }, [Tid])
+    const changeTodolistTitle = useCallback((title: string) =>
+        updateTodolistTitle({Tid, title}), [Tid])
 
     const addTask = useCallback((title: string) => createTask({Tid, title}), [Tid])
 
@@ -62,11 +56,11 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
             </div>
             <div style={{marginTop: '5px'}}>
                 <Button variant={filter === 'all' ? 'contained' : 'outlined'}
-                        onClick={() => changeFilter('all')}>All</Button>
+                        onClick={() => changeTodolistFilter({Tid, filter: 'all'})}>All</Button>
                 <Button variant={filter === 'active' ? 'contained' : 'outlined'}
-                        onClick={() => changeFilter('active')}>Active</Button>
+                        onClick={() => changeTodolistFilter({Tid, filter: 'active'})}>Active</Button>
                 <Button variant={filter === 'completed' ? 'contained' : 'outlined'}
-                        onClick={() => changeFilter('completed')}>Completed</Button>
+                        onClick={() => changeTodolistFilter({Tid, filter: 'completed'})}>Completed</Button>
             </div>
         </div>
     )
