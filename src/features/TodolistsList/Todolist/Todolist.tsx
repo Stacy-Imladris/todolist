@@ -8,9 +8,12 @@ import {SuperInput, SuperSpan} from '../../../components';
 import {FilterValuesType} from '../todolists-reducer';
 import {FilterButton} from './FilterButton/FilterButton';
 
+const filterButtons: FilterValuesType[] = ['all', 'active', 'completed']
+
 type TodolistPropsType = {
     Tid: string
 }
+
 export const Todolist = memo(({Tid}: TodolistPropsType) => {
     const {
         title,
@@ -57,12 +60,11 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                 {tasksForTodolist.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)}
             </div>
             <div style={{marginTop: '5px'}}>
-                <FilterButton onClick={onClickChangeTodolistFilter}
-                              currentFilter={filter} filter={'all'}/>
-                <FilterButton onClick={onClickChangeTodolistFilter}
-                              currentFilter={filter} filter={'active'}/>
-                <FilterButton onClick={onClickChangeTodolistFilter}
-                              currentFilter={filter} filter={'completed'}/>
+                {
+                    filterButtons.map(value => <FilterButton key={value} filter={value}
+                                                          onClick={onClickChangeTodolistFilter}
+                                                          currentFilter={filter}/>)
+                }
             </div>
         </div>
     )
