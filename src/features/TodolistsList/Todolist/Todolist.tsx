@@ -1,10 +1,12 @@
 import {memo, useCallback} from 'react';
-import {Button, IconButton} from '@mui/material';
+import {IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from '../../../store/store';
 import {Task, tasksAsyncActions, todolistsActions, todolistsAsyncActions} from '../index';
 import {TaskStatuses} from '../../../enums/taskStatuses';
 import {SuperInput, SuperSpan} from '../../../components';
+import {FilterValuesType} from '../todolists-reducer';
+import {FilterButton} from './FilterButton/FilterButton';
 
 type TodolistPropsType = {
     Tid: string
@@ -27,6 +29,9 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
 
     const changeTodolistTitle = useCallback((title: string) =>
         updateTodolistTitle({Tid, title}), [Tid])
+
+    const onClickChangeTodolistFilter = useCallback((filter: FilterValuesType) =>
+        changeTodolistFilter({Tid, filter}), [Tid])
 
     const addTask = useCallback((title: string) => createTask({Tid, title}), [Tid])
 
@@ -52,13 +57,14 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                 {tasksForTodolist.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)}
             </div>
             <div style={{marginTop: '5px'}}>
-                <Button variant={filter === 'all' ? 'contained' : 'outlined'}
-                        onClick={() => changeTodolistFilter({Tid, filter: 'all'})}>All</Button>
-                <Button variant={filter === 'active' ? 'contained' : 'outlined'}
-                        onClick={() => changeTodolistFilter({Tid, filter: 'active'})}>Active</Button>
-                <Button variant={filter === 'completed' ? 'contained' : 'outlined'}
-                        onClick={() => changeTodolistFilter({Tid, filter: 'completed'})}>Completed</Button>
+                <FilterButton onClick={onClickChangeTodolistFilter}
+                              currentFilter={filter} filter={'all'}/>
+                <FilterButton onClick={onClickChangeTodolistFilter}
+                              currentFilter={filter} filter={'active'}/>
+                <FilterButton onClick={onClickChangeTodolistFilter}
+                              currentFilter={filter} filter={'completed'}/>
             </div>
         </div>
     )
 })
+

@@ -1,13 +1,5 @@
-import {
-    AppBar,
-    Button,
-    CircularProgress,
-    Container,
-    IconButton,
-    LinearProgress,
-    Toolbar,
-    Typography
-} from '@mui/material';
+import {AppBar, Button, CircularProgress, Container, IconButton, LinearProgress,
+    Toolbar, Typography} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {TodolistsList} from '../features/TodolistsList';
 import {useActions, useAppSelector} from '../store/store';
