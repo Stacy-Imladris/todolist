@@ -21,12 +21,15 @@ export const TodolistsList = () => {
     if (!isLoggedIn) return <Navigate to={PATH.LOGIN}/>
 
     return <>
-        <Grid container style={{padding: '20px'}}>
+        <Grid container style={{padding: '90px 20px 30px 20px'}}>
             <SuperInput addHandler={createTodolist}/>
         </Grid>
         <Grid container spacing={5} style={{flexWrap: 'nowrap'}}>
-            {todolists.map(({id}) => <Grid item key={id}>
-                    <Paper elevation={3} style={{padding: '10px', minWidth: '370px', maxWidth: '370px'}}>
+            {todolists.map(({id}) => <Grid item key={id} style={{paddingRight: '40px'}}>
+                    <Paper elevation={3} style={{
+                        padding: '10px',
+                        minWidth: '370px', maxWidth: '370px',
+                    }}>
                         <Todolist Tid={id}/>
                     </Paper>
                 </Grid>
