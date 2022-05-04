@@ -1,19 +1,23 @@
 import {ChangeEvent, FocusEvent, KeyboardEvent, memo, useState} from 'react';
 import {TextField} from '@mui/material';
+import {RequestStatusType} from '../../app/app-reducer';
 
 type SuperSpanPropsType = {
     title: string
     changeTitle: (title: string) => void
+    entityStatus?: RequestStatusType
 }
-export const SuperSpan = memo(({changeTitle, ...restProps}: SuperSpanPropsType) => {
+export const SuperSpan = memo(({changeTitle, entityStatus, ...restProps}: SuperSpanPropsType) => {
     const [title, setTitle] = useState<string>(restProps.title)
     const [temp, setTemp] = useState<string>(restProps.title)
     const [input, setInput] = useState<boolean>(false)
     const [error, setError] = useState<string>('Change title')
 
     const inputOn = () => {
-        setTemp(title)
-        setInput(true)
+        if (entityStatus !== 'loading') {
+            setTemp(title)
+            setInput(true)
+        }
     }
     const inputOff = () => {
         setInput(false)
