@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {todolistsStartState} from './todolists-reducer.test';
 import {
     createTask,
@@ -9,6 +8,8 @@ import {
     updateTask
 } from './tasks-reducer';
 import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-reducer';
+import {TaskPriorities} from '../../enums/taskPriorities';
+import {TaskStatuses} from '../../enums/taskStatuses';
 
 let todolistId1: string
 let todolistId2: string

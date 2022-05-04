@@ -9,16 +9,15 @@ import {
     Typography
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {TodolistsList} from '../features/TodolistsList/TodolistsList';
-import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
+import {TodolistsList} from '../features/TodolistsList';
 import {useActions, useAppSelector} from '../store/store';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {Login} from '../features/Login/Login';
 import {useEffect} from 'react';
 import {PATH} from '../enums/paths';
 import {selectAppIsInitialized, selectAppStatus} from './selectors';
-import {authAsyncActions, authSelectors} from '../features/Login';
+import {authAsyncActions, authSelectors, Login} from '../features/Login';
 import {appAsyncActions} from './app-reducer';
+import {ErrorSnackbar} from '../components';
 
 export const App = () => {
     const status = useAppSelector(selectAppStatus)

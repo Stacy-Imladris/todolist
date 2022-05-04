@@ -3,8 +3,8 @@ import {Checkbox, IconButton} from '@mui/material';
 import {SuperSpan} from '../../../../components/SuperSpan/SuperSpan';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from '../../../../store/store';
-import {TaskStatuses} from '../../../../api/todolists-api';
 import {tasksAsyncActions} from '../../index';
+import {TaskStatuses} from '../../../../enums/taskStatuses';
 
 type TaskPropsType = {
     taskId: string

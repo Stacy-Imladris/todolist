@@ -1,12 +1,10 @@
 import {memo, useCallback} from 'react';
-import {SuperInput} from '../../../components/SuperInput/SuperInput';
-import {SuperSpan} from '../../../components/SuperSpan/SuperSpan';
 import {Button, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from '../../../store/store';
-import {Task} from './Task/Task';
-import {TaskStatuses} from '../../../api/todolists-api';
-import {tasksAsyncActions, todolistsActions, todolistsAsyncActions} from '../index';
+import {Task, tasksAsyncActions, todolistsActions, todolistsAsyncActions} from '../index';
+import {TaskStatuses} from '../../../enums/taskStatuses';
+import {SuperInput, SuperSpan} from '../../../components';
 
 type TodolistPropsType = {
     Tid: string
