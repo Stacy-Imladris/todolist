@@ -7,8 +7,13 @@ import {TaskStatuses} from '../../../enums/taskStatuses';
 import {SuperInput, SuperSpan} from '../../../components';
 import {FilterValuesType} from '../todolists-reducer';
 import {FilterButton} from './FilterButton/FilterButton';
+import {filterValues} from '../../../enums/filterValues';
 
-const filterButtons: FilterValuesType[] = ['all', 'active', 'completed']
+const filterButtons: FilterValuesType[] = [
+    filterValues.all,
+    filterValues.active,
+    filterValues.completed
+]
 
 type TodolistPropsType = {
     Tid: string
