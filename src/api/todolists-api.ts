@@ -1,4 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
+import {TaskPriorities} from '../enums/taskPriorities';
+import {TaskStatuses} from '../enums/taskStatuses';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -77,14 +79,6 @@ export type TaskType = {
     startDate: string
     deadline: string
     addedDate: string
-}
-
-export enum TaskPriorities {
-    Low = 0,
-    Middle = 1,
-    Hi = 2,
-    Urgently = 3,
-    Later = 4
 }
 export type GetTasksResponse = {
     items: TaskType[]
