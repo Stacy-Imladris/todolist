@@ -63,13 +63,22 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
             </h3>
             <SuperInput addHandler={addTask} disabled={entityStatus === 'loading'}/>
             <div>
-                {tasksForTodolist.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)}
+                {
+                    tasksForTodolist.length
+                        ? tasksForTodolist.map(({id}) => <Task key={id} taskId={id}
+                                                               Tid={Tid}/>)
+                        : <div
+                            style={{textAlign: 'center', opacity: '0.5', padding: '10px'}}>
+                            <div>No tasks yet.</div>
+                            <div>You can create the first one</div>
+                        </div>
+                }
             </div>
             <div style={{marginTop: '5px'}}>
                 {
                     filterButtons.map(value => <FilterButton key={value} filter={value}
-                                                          onClick={onClickChangeTodolistFilter}
-                                                          currentFilter={filter}/>)
+                                                             onClick={onClickChangeTodolistFilter}
+                                                             currentFilter={filter}/>)
                 }
             </div>
         </div>

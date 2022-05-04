@@ -27,16 +27,20 @@ export const Task = memo(({taskId, Tid}: TaskPropsType) => {
     }, [Tid, taskId])
 
     return (
-        <div style={{paddingLeft: '10px'}}>
-            <Checkbox
-                checked={task.status === TaskStatuses.Completed}
-                onChange={checkboxHandler}
-                inputProps={{'aria-label': 'controlled'}}
-            />
-            <SuperSpan title={task.title} changeTitle={changeTaskTitle}/>
-            <IconButton size="small" onClick={removeTask}>
-                <DeleteIcon fontSize="inherit"/>
-            </IconButton>
+        <div style={{paddingLeft: '10px', display: 'flex'}}>
+            <div style={{width: '10%'}}>
+                <Checkbox
+                    checked={task.status === TaskStatuses.Completed}
+                    onChange={checkboxHandler}
+                    inputProps={{'aria-label': 'controlled'}}
+                />
+            </div>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '75%', paddingLeft: '15px'}}>
+            <div style={{paddingTop: '7px'}}><SuperSpan title={task.title} changeTitle={changeTaskTitle}/></div>
+                <IconButton size="small" onClick={removeTask}>
+                    <DeleteIcon fontSize="inherit"/>
+                </IconButton>
+            </div>
         </div>
     )
 })
