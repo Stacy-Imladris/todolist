@@ -54,7 +54,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
     return (
         <div>
             <IconButton size="small" onClick={removeTodolist}
-                        disabled={entityStatus === 'loading'}>
+                        disabled={entityStatus === 'loading'} style={{float: 'right'}}>
                 <DeleteIcon fontSize="inherit"/>
             </IconButton>
             <h3 style={{textAlign: 'center'}}>
@@ -72,7 +72,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                                                           currentFilter={filter}/>)
                 }
             </div>
-        </div>
+        </di>
     )
 })
 
