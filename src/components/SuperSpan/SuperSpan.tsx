@@ -1,26 +1,24 @@
-import {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
+import {ChangeEvent, FocusEvent, KeyboardEvent, memo, useState} from 'react';
 import {TextField} from '@mui/material';
 
 type SuperSpanPropsType = {
     title: string
     changeTitle: (title: string) => void
 }
-
-export const SuperSpan = memo(({title, changeTitle}: SuperSpanPropsType) => {
-    const [value, setValue] = useState<string>(title)
-    const [temp, setTemp] = useState<string>(title)
+export const SuperSpan = memo(({changeTitle, ...restProps}: SuperSpanPropsType) => {
+    const [title, setTitle] = useState<string>(restProps.title)
+    const [temp, setTemp] = useState<string>(restProps.title)
     const [input, setInput] = useState<boolean>(false)
     const [error, setError] = useState<string>('Change title')
 
     const inputOn = () => {
-        setTemp(value)
+        setTemp(title)
         setInput(true)
     }
-
     const inputOff = () => {
         setInput(false)
         if (error === "Title is incorrect") {
-            setValue(temp)
+            setTitle(temp)
             setError('Change title')
         } else {
             let trTitle = title.trim()
@@ -32,9 +30,9 @@ export const SuperSpan = memo(({title, changeTitle}: SuperSpanPropsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.value === " " || e.currentTarget.value === '') {
             setError('Title is incorrect')
-            setValue('')
+            setTitle('')
         } else {
-            setValue(e.currentTarget.value)
+            setTitle(e.currentTarget.value)
             setError('Title is correct')
         }
     }
@@ -46,13 +44,13 @@ export const SuperSpan = memo(({title, changeTitle}: SuperSpanPropsType) => {
 
     return input
         ? <TextField error={error === 'Title is incorrect'}
-                   id="standard-basic"
-                   label={error}
-                   variant="standard"
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyHandler}
-                   onBlur={inputOff}
-                   autoFocus
-                   value={value}/>
-        : <span onDoubleClick={inputOn}>{title}</span>
+                     id="standard-basic"
+                     label={error}
+                     variant="standard"
+                     onChange={onChangeHandler}
+                     onKeyPress={onKeyHandler}
+                     onBlur={inputOff}
+                     autoFocus
+                     value={title}/>
+        : <span onDoubleClick={inputOn}>{restProps.title}</span>
 })

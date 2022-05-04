@@ -12,7 +12,7 @@ import {Navigate} from 'react-router-dom';
 import {LoginParamsType} from '../../api/todolists-api';
 import {PATH} from '../../enums/paths';
 import {selectIsLoggedIn} from './selectors';
-import {login} from './auth-actions';
+import {login} from './auth-reducer';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn)

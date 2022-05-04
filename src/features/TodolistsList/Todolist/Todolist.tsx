@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from '../../../store/store';
 import {Task} from './Task/Task';
 import {TaskStatuses} from '../../../api/todolists-api';
-import {tasksActions, todolistsActions, todolistsAsyncActions} from '../index';
+import {tasksAsyncActions, todolistsActions, todolistsAsyncActions} from '../index';
 
 type TodolistPropsType = {
     Tid: string
@@ -23,7 +23,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
         deleteTodolist,
         updateTodolistTitle,
         changeTodolistFilter
-    } = useActions({...tasksActions, ...todolistsAsyncActions, ...todolistsActions})
+    } = useActions({...tasksAsyncActions, ...todolistsAsyncActions, ...todolistsActions})
 
     const removeTodolist = useCallback(() => deleteTodolist(Tid), [Tid])
 

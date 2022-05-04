@@ -17,14 +17,14 @@ import {Login} from '../features/Login/Login';
 import {useEffect} from 'react';
 import {PATH} from '../enums/paths';
 import {selectAppIsInitialized, selectAppStatus} from './selectors';
-import {authActions, authSelectors} from '../features/Login';
-import {appAsyncActions} from './index';
+import {authAsyncActions, authSelectors} from '../features/Login';
+import {appAsyncActions} from './app-reducer';
 
 export const App = () => {
     const status = useAppSelector(selectAppStatus)
     const isInitialized = useAppSelector(selectAppIsInitialized)
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
-    const {initializeApp, logout} = useActions({...appAsyncActions, ...authActions})
+    const {initializeApp, logout} = useActions({...appAsyncActions, ...authAsyncActions})
 
     useEffect(() => {
         initializeApp()

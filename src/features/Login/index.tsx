@@ -1,4 +1,4 @@
 import * as authSelectors from './selectors'
-import * as authActions from './auth-actions'
+import {authAsyncActions} from './auth-reducer'
 
-export {authSelectors, authActions}
+export {authSelectors, authAsyncActions}

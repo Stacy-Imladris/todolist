@@ -4,7 +4,7 @@ import {SuperSpan} from '../../../../components/SuperSpan/SuperSpan';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from '../../../../store/store';
 import {TaskStatuses} from '../../../../api/todolists-api';
-import {tasksActions} from '../../index';
+import {tasksAsyncActions} from '../../index';
 
 type TaskPropsType = {
     taskId: string
@@ -12,7 +12,7 @@ type TaskPropsType = {
 }
 export const Task = memo(({taskId, Tid}: TaskPropsType) => {
     const task = useAppSelector(state => state.tasks[Tid].filter(t => t.id === taskId)[0])
-    const {deleteTask, updateTask} = useActions(tasksActions)
+    const {deleteTask, updateTask} = useActions(tasksAsyncActions)
 
     const removeTask = useCallback(() => deleteTask({Tid, taskId}), [Tid, taskId])
 

@@ -1,8 +1,8 @@
 import {todolistsAPI, TodolistType} from '../../api/todolists-api';
 import {RequestStatusType, setAppStatus} from '../../app/app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {fetchTasks} from './tasks-actions';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {fetchTasks} from './tasks-reducer';
 
 export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists', async (param, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}))
