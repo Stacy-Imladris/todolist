@@ -28,9 +28,9 @@ export const App = () => {
     }
 
     return (
-        <div className="App">
+        <div style={{position: 'relative'}}>
             <ErrorSnackbar/>
-            <AppBar position="static">
+            <AppBar position="static" style={{width: '100%', position: 'fixed', zIndex: '1'}}>
                 <Toolbar>
                     <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
                         <MenuIcon/>
