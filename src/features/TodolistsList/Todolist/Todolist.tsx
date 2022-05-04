@@ -72,7 +72,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                                                           currentFilter={filter}/>)
                 }
             </div>
-        </di>
+        </div>
     )
 })
 
