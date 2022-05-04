@@ -53,13 +53,13 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
 
     return (
         <div>
+            <IconButton size="small" onClick={removeTodolist}
+                        disabled={entityStatus === 'loading'}>
+                <DeleteIcon fontSize="inherit"/>
+            </IconButton>
             <h3 style={{textAlign: 'center'}}>
                 <SuperSpan title={title} changeTitle={changeTodolistTitle}
                            entityStatus={entityStatus}/>
-                <IconButton size="small" onClick={removeTodolist}
-                            disabled={entityStatus === 'loading'}>
-                    <DeleteIcon fontSize="inherit"/>
-                </IconButton>
             </h3>
             <SuperInput addHandler={addTask} disabled={entityStatus === 'loading'}/>
             <div>
