@@ -44,10 +44,10 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
     const addTask = useCallback((title: string) => createTask({Tid, title}), [Tid])
 
     let tasksForTodolist = tasks
-    if (filter === 'active') {
+    if (filter === filterValues.active) {
         tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.New)
     }
-    if (filter === 'completed') {
+    if (filter === filterValues.completed) {
         tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
