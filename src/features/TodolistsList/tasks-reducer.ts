@@ -45,7 +45,7 @@ export const createTask = createAsyncThunk('tasks/createTask', async (payload: {
         const res = await todolistsAPI.createTask(payload.Tid, payload.title)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus({status: 'succeeded'}))
-            return {task: res.data.data.item}
+            return {task:  res.data.data.item}
         } else {
             handleServerAppError(dispatch, res.data)
             return rejectWithValue(null)
