@@ -28,7 +28,7 @@ export const TodolistsList = () => {
             {todolists.map(({id}) => <Grid item key={id} style={{paddingRight: '40px'}}>
                     <Paper elevation={3} style={{
                         padding: '10px',
-                        minWidth: '370px', maxWidth: '370px',
+                        minWidth: '340px', maxWidth: '340px',
                     }}>
                         <Todolist Tid={id}/>
                     </Paper>
