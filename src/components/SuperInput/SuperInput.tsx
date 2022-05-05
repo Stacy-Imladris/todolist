@@ -20,6 +20,7 @@ export const SuperInput = memo(({addHandler, disabled}: SuperInputPropsType) => 
             setError('Title is correct')
         }
     }
+
     const onClickAddHandle = () => {
         let trTitle = title.trim()
         if (trTitle) {
@@ -30,10 +31,10 @@ export const SuperInput = memo(({addHandler, disabled}: SuperInputPropsType) => 
             setError('Title is incorrect')
         }
     }
+
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onClickAddHandle()
-            setTitle('')
         }
     }
 

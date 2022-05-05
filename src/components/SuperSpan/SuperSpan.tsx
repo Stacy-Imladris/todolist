@@ -1,6 +1,8 @@
 import {ChangeEvent, FocusEvent, KeyboardEvent, memo, useState} from 'react';
 import {TextField} from '@mui/material';
 import {RequestStatusType} from '../../app/app-reducer';
+import {useAppSelector} from '../../store/store';
+import {selectAppError} from '../../app/selectors';
 
 type SuperSpanPropsType = {
     title: string
@@ -25,9 +27,9 @@ export const SuperSpan = memo(({changeTitle, entityStatus, ...restProps}: SuperS
             setTitle(temp)
             setError('Change title')
         } else {
-            let trTitle = title.trim()
-            if (trTitle) {
-                changeTitle(trTitle)
+            let trimmedTitle = title.trim()
+            if (trimmedTitle) {
+                changeTitle(trimmedTitle)
             }
         }
     }

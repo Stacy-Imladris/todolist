@@ -42,7 +42,7 @@ export const App = () => {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path='/' element={<Navigate to={PATH.LOGIN}/>}/>
+                    <Route path='/' element={<Navigate to={PATH.MAIN}/>}/>
                     <Route path={PATH.MAIN} element={<TodolistsList/>}/>
                     <Route path={PATH.LOGIN} element={<Login/>}/>
                     <Route path={PATH.ERROR_404} element={<h1>404: PAGE NOT FOUND</h1>}/>
