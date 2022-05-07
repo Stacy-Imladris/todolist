@@ -31,7 +31,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
     const changeTodolistTitle = useCallback((title: string) =>
         updateTodolistTitle({Tid, title}), [Tid])
 
-    const onClickChangeTodolistFilter = useCallback((filter: FilterValuesType) =>
+    const onClickChangeFilter = useCallback((filter: FilterValuesType) =>
         changeTodolistFilter({Tid, filter}), [Tid])
 
     const addTask = useCallback((title: string) => createTask({Tid, title}), [Tid])
@@ -63,12 +63,10 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                 </div>
                 }
             </div>
-            <div style={{marginTop: '5px'}}>
-                {
-                    filterButtons.map(value => <FilterButton key={value} filter={value}
-                                                             onClick={onClickChangeTodolistFilter}
-                                                             currentFilter={filter}/>)
-                }
+            <div className={s.buttonBox}>
+                {filterButtons.map(value => <FilterButton key={value} filter={value}
+                                                          onClick={onClickChangeFilter}
+                                                          currentFilter={filter}/>)}
             </div>
         </>
     )
