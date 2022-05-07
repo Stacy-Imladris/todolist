@@ -24,12 +24,11 @@ export const TodolistsList = () => {
         <Grid container style={{padding: '90px 20px 30px 20px'}}>
             <SuperInput addHandler={createTodolist}/>
         </Grid>
-        <Grid container spacing={5} style={{flexWrap: 'nowrap', paddingBottom: '20px', overflowX: 'scroll', minHeight: '82vh'}}>
+        <Grid style={{flexWrap: 'nowrap', paddingBottom: '20px', overflowX: 'scroll', minHeight: '82vh'}}
+              container spacing={5} >
             {todolists.map(({id}) => <Grid item key={id} style={{paddingRight: '40px'}}>
-                    <Paper elevation={3} style={{
-                        padding: '10px',
-                        minWidth: '350px', maxWidth: '350px',
-                    }}>
+                    <Paper style={{padding: '10px', minWidth: '350px', maxWidth: '350px'}}
+                           elevation={3}>
                         <Todolist Tid={id}/>
                     </Paper>
                 </Grid>

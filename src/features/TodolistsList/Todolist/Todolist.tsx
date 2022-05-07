@@ -20,18 +20,10 @@ type TodolistPropsType = {
 }
 
 export const Todolist = memo(({Tid}: TodolistPropsType) => {
-    const {
-        title,
-        filter,
-        entityStatus
-    } = useAppSelector(state => state.todolists.filter(tl => tl.id === Tid)[0])
+    const {title, filter, entityStatus} = useAppSelector(state => state.todolists.filter(tl => tl.id === Tid)[0])
     const tasks = useAppSelector(state => state.tasks[Tid])
-    const {
-        createTask,
-        deleteTodolist,
-        updateTodolistTitle,
-        changeTodolistFilter
-    } = useActions({...tasksAsyncActions, ...todolistsAsyncActions, ...todolistsActions})
+    const {createTask, deleteTodolist, updateTodolistTitle, changeTodolistFilter} = useActions({
+        ...tasksAsyncActions, ...todolistsAsyncActions, ...todolistsActions})
 
     const removeTodolist = useCallback(() => deleteTodolist(Tid), [Tid])
 
@@ -52,7 +44,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
     }
 
     return (
-        <div>
+        <>
             <IconButton size="small" onClick={removeTodolist}
                         disabled={entityStatus === 'loading'} style={{float: 'right'}}>
                 <DeleteIcon fontSize="inherit"/>
@@ -81,7 +73,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                                                              currentFilter={filter}/>)
                 }
             </div>
-        </div>
+        </>
     )
 })
 
