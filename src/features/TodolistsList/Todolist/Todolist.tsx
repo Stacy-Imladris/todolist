@@ -8,6 +8,7 @@ import {SuperInput, SuperSpan} from '../../../components';
 import {FilterValuesType} from '../todolists-reducer';
 import {FilterButton} from './FilterButton/FilterButton';
 import {filterValues} from '../../../enums';
+import s from './Todolist.module.css'
 
 const filterButtons: FilterValuesType[] = [
     filterValues.all,
@@ -49,7 +50,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
                         disabled={entityStatus === 'loading'} >
                 <DeleteIcon fontSize="inherit"/>
             </IconButton>
-            <h3 style={{textAlign: 'center'}}>
+            <h3 className={s.title}>
                 <SuperSpan title={title} changeTitle={changeTodolistTitle}
                            entityStatus={entityStatus}/>
             </h3>
@@ -57,7 +58,7 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
             <div>
                 {todolistTasks.length
                     ? todolistTasks.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)
-                    : <div style={{textAlign: 'center', opacity: '0.5', padding: '10px'}}>
+                    : <div className={s.empty}>
                         <div>No tasks yet.</div><div>You can create the first one</div>
                 </div>
                 }
