@@ -9,25 +9,25 @@ type SuperSpanPropsType = {
     changeTitle: (title: string) => void
     entityStatus?: RequestStatusType
 }
-export const SuperSpan = memo(({changeTitle, entityStatus, ...restProps}: SuperSpanPropsType) => {
-    const [title, setTitle] = useState<string>(restProps.title)
-    const [temp, setTemp] = useState<string>(restProps.title)
+export const SuperSpan = memo(({changeTitle, entityStatus, title}: SuperSpanPropsType) => {
+    const [value, setValue] = useState<string>(title)
+    const [temp, setTemp] = useState<string>(title)
     const [input, setInput] = useState<boolean>(false)
     const [error, setError] = useState<string>('Change title')
 
     const inputOn = () => {
         if (entityStatus !== 'loading') {
-            setTemp(title)
+            setTemp(value)
             setInput(true)
         }
     }
     const inputOff = () => {
         setInput(false)
         if (error === "Title is incorrect") {
-            setTitle(temp)
+            setValue(temp)
             setError('Change title')
         } else {
-            let trimmedTitle = title.trim()
+            let trimmedTitle = value.trim()
             if (trimmedTitle) {
                 changeTitle(trimmedTitle)
             }
@@ -36,9 +36,9 @@ export const SuperSpan = memo(({changeTitle, entityStatus, ...restProps}: SuperS
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.value === " " || e.currentTarget.value === '') {
             setError('Title is incorrect')
-            setTitle('')
+            setValue('')
         } else {
-            setTitle(e.currentTarget.value)
+            setValue(e.currentTarget.value)
             setError('Title is correct')
         }
     }
@@ -57,6 +57,6 @@ export const SuperSpan = memo(({changeTitle, entityStatus, ...restProps}: SuperS
                      onKeyPress={onKeyHandler}
                      onBlur={inputOff}
                      autoFocus
-                     value={title}/>
-        : <span onDoubleClick={inputOn}>{restProps.title}</span>
+                     value={value}/>
+        : <span onDoubleClick={inputOn} style={{wordBreak: 'break-all'}}>{title}</span>
 })
