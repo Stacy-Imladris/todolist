@@ -22,16 +22,12 @@ export const App = () => {
         initializeApp()
     }, [])
 
-    if (!isInitialized) {
-        return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
-            <CircularProgress/>
-        </div>
-    }
+    if (!isInitialized) return <div className={s.preloader}><CircularProgress/></div>
 
     return (
         <div className={s.container}>
             <ErrorSnackbar/>
-            <AppBar position="static" style={{width: '100%', position: 'fixed', zIndex: '1'}}>
+            <AppBar position="static" className={s.appBar}>
                 <Toolbar>
                     <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
                         <MenuIcon/>
