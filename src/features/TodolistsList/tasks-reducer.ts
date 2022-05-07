@@ -1,4 +1,3 @@
-import {TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {
     clearData,
@@ -10,6 +9,8 @@ import {setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils';
 import {RootState} from '../../store/store';
 import {appActions} from '../../app';
+import {tasksAPI} from '../../api';
+import {TaskType, UpdateTaskModelType} from '../../api/tasks-api';
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (Tid: string, {
     dispatch,
@@ -17,7 +18,7 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (Tid: strin
 }) => {
     dispatch(appActions.setAppStatus({status: 'loading'}))
     try {
-        const res = await todolistsAPI.getTasks(Tid)
+        const res = await tasksAPI.getTasks(Tid)
         dispatch(setAppStatus({status: 'succeeded'}))
         return {Tid, tasks: res.data.items}
     } catch (error) {
@@ -32,7 +33,7 @@ export const deleteTask = createAsyncThunk('tasks/deleteTask', async (payload: {
 }) => {
     dispatch(setAppStatus({status: 'loading'}))
     try {
-        const res = await todolistsAPI.deleteTask(payload.Tid, payload.taskId)
+        const res = await tasksAPI.deleteTask(payload.Tid, payload.taskId)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus({status: 'succeeded'}))
             return payload
@@ -52,7 +53,7 @@ export const createTask = createAsyncThunk('tasks/createTask', async (payload: {
 }) => {
     dispatch(setAppStatus({status: 'loading'}))
     try {
-        const res = await todolistsAPI.createTask(payload.Tid, payload.title)
+        const res = await tasksAPI.createTask(payload.Tid, payload.title)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus({status: 'succeeded'}))
             return {task: res.data.data.item}
@@ -86,7 +87,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (payload: {
         ...payload.domainModel
     }
     try {
-        const res = await todolistsAPI.updateTask(payload.Tid, payload.taskId, apiModel)
+        const res = await tasksAPI.updateTask(payload.Tid, payload.taskId, apiModel)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus({status: 'succeeded'}))
             return payload

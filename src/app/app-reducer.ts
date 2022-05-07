@@ -1,7 +1,7 @@
 import {createAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {authAPI} from '../api/todolists-api';
 import {setIsLoggedIn} from '../features/Login/auth-reducer';
 import {handleServerNetworkError} from '../utils';
+import {authAPI} from '../api';
 
 export const initializeApp = createAsyncThunk('app/initializeApp', async (param, {
     dispatch,
