@@ -10,6 +10,7 @@ import {selectAppIsInitialized, selectAppStatus} from './selectors';
 import {authAsyncActions, authSelectors, Login} from '../features/Login';
 import {appAsyncActions} from './app-reducer';
 import {ErrorSnackbar} from '../components';
+import s from './App.module.css'
 
 export const App = () => {
     const status = useAppSelector(selectAppStatus)
@@ -28,7 +29,7 @@ export const App = () => {
     }
 
     return (
-        <div style={{position: 'relative'}}>
+        <div className={s.container}>
             <ErrorSnackbar/>
             <AppBar position="static" style={{width: '100%', position: 'fixed', zIndex: '1'}}>
                 <Toolbar>
