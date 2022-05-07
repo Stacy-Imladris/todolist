@@ -12,7 +12,7 @@ import {Navigate} from 'react-router-dom';
 import {PATH} from '../../enums';
 import {selectIsLoggedIn} from './selectors';
 import {login} from './auth-reducer';
-import {LoginParamsType} from '../../api/auth-api';
+import {LoginParamsType} from '../../api';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
