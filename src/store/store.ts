@@ -22,7 +22,7 @@ export const store = configureStore({
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export const useAppDispatch = () => useDispatch<AppDispatch>()
-export function useActions<T extends ActionCreatorsMapObject<any>>(actions: T) {
+export function useActions<T extends ActionCreatorsMapObject>(actions: T) {
     const dispatch = useAppDispatch()
     return useMemo(() => bindActionCreators(actions, dispatch), [])
 }
