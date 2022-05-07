@@ -31,21 +31,18 @@ export const Task = memo(({taskId, Tid}: TaskPropsType) => {
         updateTask({Tid, taskId, domainModel: {title}})
     }, [Tid, taskId])
 
-    return (
-        <div className={s.container}>
-            <div className={s.checkbox}>
-                <Checkbox checked={task.status === TaskStatuses.Completed}
-                          onChange={checkboxHandler}
-                          inputProps={{'aria-label': 'controlled'}}/>
-            </div>
-            <div className={s.taskBox}>
-                <div className={s.title}>
-                    <SuperSpan title={task.title} changeTitle={changeTaskTitle}/>
-                </div>
-                <IconButton size="small" onClick={removeTask}>
-                    <DeleteIcon fontSize="inherit"/>
-                </IconButton>
-            </div>
+    return <div className={s.container}>
+        <div className={s.checkbox}>
+            <Checkbox checked={task.status === TaskStatuses.Completed}
+                      onChange={checkboxHandler} inputProps={{'aria-label': 'controlled'}}/>
         </div>
-    )
+        <div className={s.taskBox}>
+            <div className={s.title}>
+                <SuperSpan title={task.title} changeTitle={changeTaskTitle}/>
+            </div>
+            <IconButton size="small" onClick={removeTask}>
+                <DeleteIcon fontSize="inherit"/>
+            </IconButton>
+        </div>
+    </div>
 })

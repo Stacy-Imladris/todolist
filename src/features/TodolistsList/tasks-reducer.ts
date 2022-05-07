@@ -7,7 +7,7 @@ import {
     fetchTodolists
 } from './todolists-reducer';
 import {setAppStatus} from '../../app/app-reducer';
-import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {handleServerAppError, handleServerNetworkError} from '../../utils';
 import {RootState} from '../../store/store';
 import {appActions} from '../../app';
 
