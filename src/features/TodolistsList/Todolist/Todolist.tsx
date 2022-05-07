@@ -35,18 +35,18 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
 
     const addTask = useCallback((title: string) => createTask({Tid, title}), [Tid])
 
-    let tasksForTodolist = tasks
+    let todolistTasks = tasks
     if (filter === filterValues.active) {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.New)
+        todolistTasks = tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (filter === filterValues.completed) {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed)
+        todolistTasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     return (
         <>
-            <IconButton size="small" onClick={removeTodolist}
-                        disabled={entityStatus === 'loading'} style={{float: 'right'}}>
+            <IconButton size="small" onClick={removeTodolist} style={{float: 'right'}}
+                        disabled={entityStatus === 'loading'} >
                 <DeleteIcon fontSize="inherit"/>
             </IconButton>
             <h3 style={{textAlign: 'center'}}>
@@ -55,15 +55,11 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
             </h3>
             <SuperInput addHandler={addTask} disabled={entityStatus === 'loading'}/>
             <div>
-                {
-                    tasksForTodolist.length
-                        ? tasksForTodolist.map(({id}) => <Task key={id} taskId={id}
-                                                               Tid={Tid}/>)
-                        : <div
-                            style={{textAlign: 'center', opacity: '0.5', padding: '10px'}}>
-                            <div>No tasks yet.</div>
-                            <div>You can create the first one</div>
-                        </div>
+                {todolistTasks.length
+                    ? todolistTasks.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)
+                    : <div style={{textAlign: 'center', opacity: '0.5', padding: '10px'}}>
+                        <div>No tasks yet.</div><div>You can create the first one</div>
+                </div>
                 }
             </div>
             <div style={{marginTop: '5px'}}>
