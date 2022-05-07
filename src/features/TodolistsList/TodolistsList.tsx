@@ -2,7 +2,7 @@ import {useActions, useAppSelector} from '../../store/store';
 import {useEffect} from 'react';
 import {Grid, Paper} from '@mui/material';
 import {Navigate} from 'react-router-dom';
-import {PATH} from '../../enums/paths';
+import {PATH} from '../../enums';
 import {selectTodolists} from './selectors';
 import {authSelectors} from '../Login';
 import {Todolist, todolistsAsyncActions} from './index';

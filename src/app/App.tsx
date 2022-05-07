@@ -5,7 +5,7 @@ import {TodolistsList} from '../features/TodolistsList';
 import {useActions, useAppSelector} from '../store/store';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {useEffect} from 'react';
-import {PATH} from '../enums/paths';
+import {PATH} from '../enums';
 import {selectAppIsInitialized, selectAppStatus} from './selectors';
 import {authAsyncActions, authSelectors, Login} from '../features/Login';
 import {appAsyncActions} from './app-reducer';
