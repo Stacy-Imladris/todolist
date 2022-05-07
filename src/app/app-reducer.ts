@@ -37,21 +37,19 @@ export const slice = createSlice({
     name: 'app',
     initialState: appInitialState,
     reducers: {},
-    extraReducers: builder => {
-        builder
-            .addCase(initializeApp.fulfilled, (state) => {
-                state.isInitialized = true
-            })
-            .addCase(initializeApp.rejected, (state) => {
-                state.isInitialized = true
-            })
-            .addCase(setAppStatus, (state, action) => {
-                state.status = action.payload.status
-            })
-            .addCase(setAppError, (state, action) => {
-                state.error = action.payload.error
-            })
-    }
+    extraReducers: builder => builder
+        .addCase(initializeApp.fulfilled, (state) => {
+            state.isInitialized = true
+        })
+        .addCase(initializeApp.rejected, (state) => {
+            state.isInitialized = true
+        })
+        .addCase(setAppStatus, (state, action) => {
+            state.status = action.payload.status
+        })
+        .addCase(setAppError, (state, action) => {
+            state.error = action.payload.error
+        })
 })
 
 export const appReducer = slice.reducer

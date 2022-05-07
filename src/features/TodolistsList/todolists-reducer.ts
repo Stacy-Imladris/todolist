@@ -116,27 +116,25 @@ export const slice = createSlice({
             return []
         },
     },
-    extraReducers: builder => {
-        builder
-            .addCase(deleteTodolist.fulfilled, (state, action) => {
-                const index = state.findIndex(f => f.id === action.payload.Tid)
-                if (index > -1) {
-                    state.splice(index, 1)
-                }
-            })
-            .addCase(fetchTodolists.fulfilled, (state, action) => {
-                return action.payload.todolists.map(m => ({...m, filter: 'all', entityStatus: 'idle'}))
-            })
-            .addCase(createTodolist.fulfilled, (state, action) => {
-                state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
-            })
-            .addCase(updateTodolistTitle.fulfilled, (state, action) => {
-                const index = state.findIndex(f => f.id === action.payload.Tid)
-                if (index > -1) {
-                    state[index].title = action.payload.title
-                }
-            })
-    }
+    extraReducers: builder => builder
+        .addCase(deleteTodolist.fulfilled, (state, action) => {
+            const index = state.findIndex(f => f.id === action.payload.Tid)
+            if (index > -1) {
+                state.splice(index, 1)
+            }
+        })
+        .addCase(fetchTodolists.fulfilled, (state, action) => {
+            return action.payload.todolists.map(m => ({...m, filter: 'all', entityStatus: 'idle'}))
+        })
+        .addCase(createTodolist.fulfilled, (state, action) => {
+            state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
+        })
+        .addCase(updateTodolistTitle.fulfilled, (state, action) => {
+            const index = state.findIndex(f => f.id === action.payload.Tid)
+            if (index > -1) {
+                state[index].title = action.payload.title
+            }
+        })
 })
 
 export const todolistsReducer = slice.reducer

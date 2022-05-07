@@ -65,15 +65,13 @@ export const slice = createSlice({
             state.isLoggedIn = action.payload.isLoggedIn
         },
     },
-    extraReducers: builder => {
-        builder
-            .addCase(login.fulfilled, (state) => {
-                state.isLoggedIn = true
-            })
-            .addCase(logout.fulfilled, (state) => {
-                state.isLoggedIn = false
-            })
-    }
+    extraReducers: builder => builder
+        .addCase(login.fulfilled, (state) => {
+            state.isLoggedIn = true
+        })
+        .addCase(logout.fulfilled, (state) => {
+            state.isLoggedIn = false
+        })
 })
 
 export const authReducer = slice.reducer
