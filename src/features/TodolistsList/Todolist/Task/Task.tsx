@@ -5,7 +5,7 @@ import {useActions, useAppSelector} from '../../../../store/store';
 import {tasksAsyncActions} from '../../index';
 import {TaskStatuses} from '../../../../enums';
 import {SuperSpan} from '../../../../components';
-import s from 'Task.module.css'
+import s from './Task.module.css'
 
 type TaskPropsType = {
     taskId: string

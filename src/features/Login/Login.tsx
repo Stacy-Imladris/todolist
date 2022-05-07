@@ -9,10 +9,10 @@ import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {Navigate} from 'react-router-dom';
-import {LoginParamsType} from '../../api/todolists-api';
 import {PATH} from '../../enums';
 import {selectIsLoggedIn} from './selectors';
 import {login} from './auth-reducer';
+import {LoginParamsType} from '../../api/auth-api';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn)

@@ -9,8 +9,7 @@ import {setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils';
 import {RootState} from '../../store/store';
 import {appActions} from '../../app';
-import {tasksAPI} from '../../api';
-import {TaskType, UpdateTaskModelType} from '../../api/tasks-api';
+import {tasksAPI, TaskType, UpdateTaskModelType} from '../../api';
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (Tid: string, {
     dispatch,

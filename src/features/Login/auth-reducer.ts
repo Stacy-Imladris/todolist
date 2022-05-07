@@ -4,8 +4,7 @@ import {handleServerAppError, handleServerNetworkError} from '../../utils';
 import {AxiosError} from 'axios';
 import {clearData} from '../TodolistsList/todolists-reducer';
 import {ThunkError} from '../../store/store';
-import {authAPI} from '../../api';
-import {LoginParamsType} from '../../api/auth-api';
+import {authAPI, LoginParamsType} from '../../api';
 
 export const login = createAsyncThunk<undefined, LoginParamsType, ThunkError>('auth/login', async (data, {
     dispatch,
