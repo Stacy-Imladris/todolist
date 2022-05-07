@@ -21,10 +21,20 @@ type TodolistPropsType = {
 }
 
 export const Todolist = memo(({Tid}: TodolistPropsType) => {
-    const {title, filter, entityStatus} = useAppSelector(state => state.todolists.filter(tl => tl.id === Tid)[0])
+    const {
+        title,
+        filter,
+        entityStatus
+    } = useAppSelector(state => state.todolists.filter(tl => tl.id === Tid)[0])
     const tasks = useAppSelector(state => state.tasks[Tid])
-    const {createTask, deleteTodolist, updateTodolistTitle, changeTodolistFilter} = useActions({
-        ...tasksAsyncActions, ...todolistsAsyncActions, ...todolistsActions})
+    const {
+        createTask,
+        deleteTodolist,
+        updateTodolistTitle,
+        changeTodolistFilter
+    } = useActions({
+        ...tasksAsyncActions, ...todolistsAsyncActions, ...todolistsActions
+    })
 
     const removeTodolist = useCallback(() => deleteTodolist(Tid), [Tid])
 
@@ -44,31 +54,30 @@ export const Todolist = memo(({Tid}: TodolistPropsType) => {
         todolistTasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
-    return (
-        <>
-            <IconButton size="small" onClick={removeTodolist} style={{float: 'right'}}
-                        disabled={entityStatus === 'loading'} >
-                <DeleteIcon fontSize="inherit"/>
-            </IconButton>
-            <h3 className={s.title}>
-                <SuperSpan title={title} changeTitle={changeTodolistTitle}
-                           entityStatus={entityStatus}/>
-            </h3>
-            <SuperInput addHandler={addTask} disabled={entityStatus === 'loading'}/>
-            <div>
-                {todolistTasks.length
-                    ? todolistTasks.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)
-                    : <div className={s.empty}>
-                        <div>No tasks yet.</div><div>You can create the first one</div>
+    return <>
+        <IconButton size="small" onClick={removeTodolist} style={{float: 'right'}}
+                    disabled={entityStatus === 'loading'}>
+            <DeleteIcon fontSize="inherit"/>
+        </IconButton>
+        <h3 className={s.title}>
+            <SuperSpan title={title} changeTitle={changeTodolistTitle}
+                       entityStatus={entityStatus}/>
+        </h3>
+        <SuperInput addHandler={addTask} disabled={entityStatus === 'loading'}/>
+        <div>
+            {todolistTasks.length
+                ? todolistTasks.map(({id}) => <Task key={id} taskId={id} Tid={Tid}/>)
+                : <div className={s.empty}>
+                    <div>No tasks yet.</div>
+                    <div>You can create the first one</div>
                 </div>
-                }
-            </div>
-            <div className={s.buttonBox}>
-                {filterButtons.map(value => <FilterButton key={value} filter={value}
-                                                          onClick={onClickChangeFilter}
-                                                          currentFilter={filter}/>)}
-            </div>
-        </>
-    )
+            }
+        </div>
+        <div className={s.buttonBox}>
+            {filterButtons.map(value => <FilterButton key={value} filter={value}
+                                                      onClick={onClickChangeFilter}
+                                                      currentFilter={filter}/>)}
+        </div>
+    </>
 })
 
