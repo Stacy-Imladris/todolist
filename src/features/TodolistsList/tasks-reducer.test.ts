@@ -8,8 +8,8 @@ import {
     updateTask
 } from './tasks-reducer';
 import {createTodolist, deleteTodolist, fetchTodolists} from './todolists-reducer';
-import {TaskPriorities} from '../../enums/taskPriorities';
-import {TaskStatuses} from '../../enums/taskStatuses';
+import {TaskPriorities} from '../../enums';
+import {TaskStatuses} from '../../enums';
 
 let todolistId1: string
 let todolistId2: string
