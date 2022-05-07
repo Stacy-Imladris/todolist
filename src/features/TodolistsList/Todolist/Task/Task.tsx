@@ -5,6 +5,7 @@ import {useActions, useAppSelector} from '../../../../store/store';
 import {tasksAsyncActions} from '../../index';
 import {TaskStatuses} from '../../../../enums';
 import {SuperSpan} from '../../../../components';
+import s from 'Task.module.css'
 
 type TaskPropsType = {
     taskId: string
@@ -29,8 +30,8 @@ export const Task = memo(({taskId, Tid}: TaskPropsType) => {
     }, [Tid, taskId])
 
     return (
-        <div style={{paddingLeft: '10px', display: 'flex'}}>
-            <div style={{width: '10%'}}>
+        <div className={s.container}>
+            <div className={s.taskBox}>
                 <Checkbox checked={task.status === TaskStatuses.Completed}
                     onChange={checkboxHandler} inputProps={{'aria-label': 'controlled'}}/>
             </div>
