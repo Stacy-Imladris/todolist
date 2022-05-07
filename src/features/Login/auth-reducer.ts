@@ -1,13 +1,12 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {authAPI, FieldErrorType, LoginParamsType} from '../../api/todolists-api';
+import {authAPI, LoginParamsType} from '../../api/todolists-api';
 import {setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {AxiosError} from 'axios';
 import {clearData} from '../TodolistsList/todolists-reducer';
+import {ThunkError} from '../../store/store';
 
-export const login = createAsyncThunk<undefined, LoginParamsType, {rejectValue: {
-        errors: string[], fieldsErrors?: FieldErrorType[]
-    }}>('auth/login', async (data, {dispatch, rejectWithValue}) => {
+export const login = createAsyncThunk<undefined, LoginParamsType, ThunkError>('auth/login', async (data, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}))
     try {
         const res = await authAPI.login(data)
