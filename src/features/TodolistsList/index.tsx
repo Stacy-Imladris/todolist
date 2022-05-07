@@ -1,6 +1,6 @@
 import * as todolistsSelectors from './selectors'
-import {tasksAsyncActions, tasksReducer} from './tasks-reducer'
-import {todolistsAsyncActions, todolistsReducer} from './todolists-reducer'
+import {tasksReducer, tasksAsyncActions} from './tasks-reducer'
+import {todolistsReducer, todolistsAsyncActions} from './todolists-reducer'
 import {slice} from './todolists-reducer'
 import {TodolistsList} from './TodolistsList'
 import {Todolist} from './Todolist/Todolist'
