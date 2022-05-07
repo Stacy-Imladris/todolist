@@ -1,7 +1,7 @@
 import * as appSelectors from './selectors'
-import {initializeApp, slice, appReducer} from './app-reducer'
+import {initializeApp, appReducer, setAppError, setAppStatus} from './app-reducer'
 
-const appActions = slice.actions
+const appActions = {setAppStatus, setAppError}
 
 export {
     appSelectors,

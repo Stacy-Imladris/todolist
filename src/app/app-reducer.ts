@@ -1,9 +1,12 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {authAPI} from '../api/todolists-api';
 import {setIsLoggedIn} from '../features/Login/auth-reducer';
 import {handleServerNetworkError} from '../utils/error-utils';
 
-export const initializeApp = createAsyncThunk('app/initializeApp', async (param, {dispatch, rejectWithValue}) => {
+export const initializeApp = createAsyncThunk('app/initializeApp', async (param, {
+    dispatch,
+    rejectWithValue
+}) => {
     dispatch(setAppStatus({status: 'loading'}))
     try {
         const res = await authAPI.me()
@@ -21,6 +24,8 @@ export const initializeApp = createAsyncThunk('app/initializeApp', async (param,
 })
 
 export const appAsyncActions = {initializeApp}
+export const setAppStatus = createAction<{ status: RequestStatusType }>('app/setAppStatus')
+export const setAppError = createAction<{ error: null | string }>('app/setAppError')
 
 const appInitialState = {
     status: 'idle' as RequestStatusType,
@@ -31,26 +36,25 @@ const appInitialState = {
 export const slice = createSlice({
     name: 'app',
     initialState: appInitialState,
-    reducers: {
-        setAppStatus(state, action: PayloadAction<{status: RequestStatusType}>) {
-            state.status = action.payload.status
-        },
-        setAppError(state, action: PayloadAction<{error: null | string}>) {
-            state.error = action.payload.error
-        },
-    },
+    reducers: {},
     extraReducers: builder => {
-        builder.addCase(initializeApp.fulfilled, (state) => {
-            state.isInitialized = true
-        })
-        builder.addCase(initializeApp.rejected, (state) => {
-            state.isInitialized = true
-        })
+        builder
+            .addCase(initializeApp.fulfilled, (state) => {
+                state.isInitialized = true
+            })
+            .addCase(initializeApp.rejected, (state) => {
+                state.isInitialized = true
+            })
+            .addCase(setAppStatus, (state, action) => {
+                state.status = action.payload.status
+            })
+            .addCase(setAppError, (state, action) => {
+                state.error = action.payload.error
+            })
     }
 })
 
 export const appReducer = slice.reducer
-export const {setAppStatus, setAppError} = slice.actions
 
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
