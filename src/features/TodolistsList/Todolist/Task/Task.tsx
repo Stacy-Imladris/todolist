@@ -20,8 +20,10 @@ export const Task = memo(({taskId, Tid}: TaskPropsType) => {
     }, [Tid, taskId])
 
     const checkboxHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        updateTask({Tid, taskId, domainModel: {
-            status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
+        updateTask({
+            Tid, taskId, domainModel: {
+                status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
+            }
         })
     }, [Tid, taskId])
 
@@ -31,14 +33,15 @@ export const Task = memo(({taskId, Tid}: TaskPropsType) => {
 
     return (
         <div className={s.container}>
-            <div className={s.taskBox}>
+            <div className={s.checkbox}>
                 <Checkbox checked={task.status === TaskStatuses.Completed}
-                    onChange={checkboxHandler} inputProps={{'aria-label': 'controlled'}}/>
+                          onChange={checkboxHandler}
+                          inputProps={{'aria-label': 'controlled'}}/>
             </div>
-            <div style={{display: 'flex', justifyContent: 'space-between', width: '75%', paddingLeft: '15px'}}>
-            <div style={{paddingTop: '7px'}}>
-                <SuperSpan title={task.title} changeTitle={changeTaskTitle}/>
-            </div>
+            <div className={s.taskBox}>
+                <div className={s.title}>
+                    <SuperSpan title={task.title} changeTitle={changeTaskTitle}/>
+                </div>
                 <IconButton size="small" onClick={removeTask}>
                     <DeleteIcon fontSize="inherit"/>
                 </IconButton>

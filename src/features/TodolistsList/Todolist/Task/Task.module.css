@@ -3,6 +3,17 @@
     display: flex;
 }
 
-.taskBox {
+.checkbox {
     width: 10%;
+}
+
+.taskBox {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    padding-left: 15px;
+}
+
+.title {
+    padding-top: 7px;
 }
