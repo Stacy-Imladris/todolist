@@ -7,12 +7,12 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import {useAppDispatch, useAppSelector} from '../../store/store';
+import {useAppDispatch, useAppSelector} from 'store/store';
 import {Navigate} from 'react-router-dom';
-import {PATH} from '../../enums';
+import {PATH} from 'enums';
 import {selectIsLoggedIn} from './selectors';
 import {login} from './auth-reducer';
-import {LoginParamsType} from '../../api';
+import {LoginParamsType} from 'api';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
