@@ -1,4 +1,4 @@
-import {FilterValuesType} from '../../todolists-reducer';
+import {FilterValuesType} from 'features/TodolistsList/todolists-reducer';
 import {Button} from '@mui/material';
 
 type FilterButtonPropsType = {
