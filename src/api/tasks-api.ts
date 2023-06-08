@@ -1,5 +1,5 @@
 import {AxiosResponse} from 'axios';
-import {TaskPriorities, TaskStatuses} from '../enums';
+import {TaskPriorities, TaskStatuses} from 'enums';
 import {instance, ResponseType} from './api';
 
 export const tasksAPI = {
