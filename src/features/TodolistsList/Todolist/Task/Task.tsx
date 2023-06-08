@@ -1,10 +1,10 @@
 import {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useActions, useAppSelector} from '../../../../store/store';
-import {tasksAsyncActions} from '../../index';
-import {TaskStatuses} from '../../../../enums';
-import {SuperSpan} from '../../../../components';
+import {useActions, useAppSelector} from 'store/store';
+import {tasksAsyncActions} from 'features/TodolistsList';
+import {TaskStatuses} from 'enums';
+import {SuperSpan} from 'components';
 import s from './Task.module.css'
 
 type TaskPropsType = {
