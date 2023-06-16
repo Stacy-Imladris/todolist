@@ -1,12 +1,12 @@
-import {useActions, useAppSelector} from '../../store/store';
+import {useActions, useAppSelector} from 'store/store';
 import {useEffect} from 'react';
 import {Grid, Paper} from '@mui/material';
 import {Navigate} from 'react-router-dom';
-import {PATH} from '../../enums';
+import {PATH} from 'enums';
 import {selectTodolists} from './selectors';
 import {authSelectors} from '../Login';
 import {Todolist, todolistsAsyncActions} from './index';
-import {SuperInput} from '../../components';
+import {SuperInput} from 'components';
 
 export const TodolistsList = () => {
     const todolists = useAppSelector(selectTodolists)
