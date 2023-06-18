@@ -1,8 +1,8 @@
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
-import {useActions, useAppSelector} from '../../store/store';
-import {selectAppError} from '../../app/selectors';
-import {appActions} from '../../app';
+import {useActions, useAppSelector} from 'store/store';
+import {selectAppError} from 'app/selectors';
+import {appActions} from 'app';
 import {forwardRef, SyntheticEvent} from 'react';
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
