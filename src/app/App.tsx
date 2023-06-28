@@ -1,17 +1,17 @@
 import {
-    AppBar, Button, CircularProgress, Container, Icon, IconButton, LinearProgress,
+    AppBar, Button, CircularProgress, Container, IconButton, LinearProgress,
     Toolbar, Typography
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {TodolistsList} from '../features/TodolistsList';
-import {useActions, useAppSelector} from '../store/store';
+import {TodolistsList} from 'features/TodolistsList';
+import {useActions, useAppSelector} from 'store/store';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {useEffect} from 'react';
-import {PATH} from '../enums';
+import {PATH} from 'enums';
 import {selectAppIsInitialized, selectAppStatus} from './selectors';
-import {authAsyncActions, authSelectors, Login} from '../features/Login';
+import {authAsyncActions, authSelectors, Login} from 'features/Login';
 import {appAsyncActions} from './app-reducer';
-import {ErrorSnackbar} from '../components';
+import {ErrorSnackbar} from 'components';
 import s from './App.module.css'
 
 export const App = () => {
