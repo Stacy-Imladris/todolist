@@ -1,10 +1,10 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {setAppStatus} from '../../app/app-reducer';
-import {handleServerAppError, handleServerNetworkError} from '../../utils';
+import {setAppStatus} from 'app/app-reducer';
+import {handleServerAppError, handleServerNetworkError} from 'utils';
 import {AxiosError} from 'axios';
 import {clearData} from '../TodolistsList/todolists-reducer';
-import {ThunkError} from '../../store/store';
-import {authAPI, LoginParamsType} from '../../api';
+import {ThunkError} from 'store/store';
+import {authAPI, LoginParamsType} from 'api';
 
 export const login = createAsyncThunk<undefined, LoginParamsType, ThunkError>('auth/login', async (data, {
     dispatch,
