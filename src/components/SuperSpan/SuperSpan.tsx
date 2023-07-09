@@ -1,6 +1,6 @@
 import {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {TextField} from '@mui/material';
-import {RequestStatusType} from '../../app/app-reducer';
+import {RequestStatusType} from 'app/app-reducer';
 
 type SuperSpanPropsType = {
     title: string
