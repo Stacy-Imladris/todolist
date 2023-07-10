@@ -4,7 +4,7 @@ import {Grid, Paper} from '@mui/material';
 import {Navigate} from 'react-router-dom';
 import {PATH} from 'enums';
 import {selectTodolists} from './selectors';
-import {authSelectors} from '../Login';
+import {authSelectors} from 'features/Login';
 import {Todolist, todolistsAsyncActions} from './index';
 import {SuperInput} from 'components';
 
