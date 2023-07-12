@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setAppStatus} from 'app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from 'utils';
 import {AxiosError} from 'axios';
-import {clearData} from '../TodolistsList/todolists-reducer';
+import {clearData} from 'features/TodolistsList/todolists-reducer';
 import {ThunkError} from 'store/store';
 import {authAPI, LoginParamsType} from 'api';
 
