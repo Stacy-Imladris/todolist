@@ -5,7 +5,7 @@ import {useActions, useAppSelector} from 'store/store';
 import {Task, tasksAsyncActions, todolistsActions, todolistsAsyncActions} from '../index';
 import {TaskStatuses} from 'enums';
 import {SuperInput, SuperSpan} from 'components';
-import {FilterValuesType} from '../todolists-reducer';
+import {FilterValuesType} from 'features/TodolistsList/todolists-reducer';
 import {FilterButton} from './FilterButton/FilterButton';
 import {filterValues} from 'enums';
 import s from './Todolist.module.css'
