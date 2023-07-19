@@ -6,7 +6,7 @@ import {useMemo} from 'react';
 import {authReducer} from 'features/Login';
 import {appReducer} from '../app';
 import {tasksReducer, todolistsReducer} from '../features/TodolistsList';
-import {FieldErrorType} from '../api/api';
+import {FieldErrorType} from 'api/api';
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
