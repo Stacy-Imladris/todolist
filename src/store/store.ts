@@ -4,7 +4,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {configureStore} from '@reduxjs/toolkit';
 import {useMemo} from 'react';
 import {authReducer} from 'features/Login';
-import {appReducer} from '../app';
+import {appReducer} from 'app';
 import {tasksReducer, todolistsReducer} from '../features/TodolistsList';
 import {FieldErrorType} from 'api/api';
 
