@@ -2,7 +2,7 @@ import {memo, useCallback} from 'react';
 import {IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useActions, useAppSelector} from 'store/store';
-import {Task, tasksAsyncActions, todolistsActions, todolistsAsyncActions} from '../index';
+import {Task, tasksAsyncActions, todolistsActions, todolistsAsyncActions} from 'features/TodolistsList';
 import {TaskStatuses} from 'enums';
 import {SuperInput, SuperSpan} from 'components';
 import {FilterValuesType} from 'features/TodolistsList/todolists-reducer';
